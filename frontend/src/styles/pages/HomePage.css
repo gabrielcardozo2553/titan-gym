@@ -102,3 +102,40 @@
     .bienvenidos, .testimonios { width: 100%; }
     .plan.destacado { transform: none; }
 }
+
+.actividades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+}
+
+.actividad {
+    background: var(--gris);
+    border: 1px solid var(--gris-claro);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s;
+}
+
+.actividad:hover {
+    transform: translateY(-4px);
+    border-color: var(--lima);
+}
+
+.actividad img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    display: block;
+}
+
+.actividad h3 {
+    margin: 12px 16px 4px;
+    font-size: 1.5rem;
+}
+
+.actividad p {
+    margin: 0 16px 16px;
+    color: var(--muted);
+    font-size: .9rem;
+}

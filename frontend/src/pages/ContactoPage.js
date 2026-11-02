@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
+import Banner from '../components/layout/Banner';
 import '../styles/pages/ContactoPage.css';
 
 const initialForm = {
@@ -43,6 +44,8 @@ const ContactoPage = () => {
     };
 
     return (
+        <>
+        <Banner imagen="/images/banners/contacto.svg" alt="Contacto con Titan Gym" />
         <main className="holder contacto">
             <div>
                 <h2>Consultá sin compromiso</h2>
@@ -84,6 +87,7 @@ const ContactoPage = () => {
                 </ul>
             </div>
         </main>
+        </>
     );
 }
 

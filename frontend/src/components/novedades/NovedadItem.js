@@ -8,6 +8,9 @@ const NovedadItem = (props) => {
         ? new Date(fecha).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })
         : '';
 
+    // Si la novedad no tiene foto propia se usa la ilustración de su categoría
+    const imagenFinal = imagen || (categoria ? `/images/novedades/${categoria}.svg` : '');
+
     return (
         <article className="novedad">
             <div className="novedad-meta">
@@ -16,7 +19,7 @@ const NovedadItem = (props) => {
             </div>
             <h3>{titulo}</h3>
             <h4>{subtitulo}</h4>
-            {imagen && <img src={imagen} alt={titulo} />}
+            {imagenFinal && <img className={imagen ? '' : 'ilustracion'} src={imagenFinal} alt={titulo} />}
             {/* El cuerpo lo carga el administrador desde el panel */}
             <div className="cuerpo" dangerouslySetInnerHTML={{ __html: cuerpo }} />
         </article>

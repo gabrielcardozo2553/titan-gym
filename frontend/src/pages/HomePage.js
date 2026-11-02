@@ -6,6 +6,13 @@ import '../styles/pages/HomePage.css';
 const formatearPrecio = (valor) =>
     Number(valor).toLocaleString('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 
+const actividades = [
+    { nombre: 'Musculación', imagen: '/images/actividades/musculacion.svg', texto: 'Sala equipada con máquinas y peso libre.' },
+    { nombre: 'Funcional y HIIT', imagen: '/images/actividades/funcional.svg', texto: 'Clases grupales de alta intensidad.' },
+    { nombre: 'Yoga y movilidad', imagen: '/images/actividades/yoga.svg', texto: 'Flexibilidad, respiración y recuperación.' },
+    { nombre: 'Nutrición', imagen: '/images/actividades/nutricion.svg', texto: 'Planes alimentarios personalizados.' }
+];
+
 const HomePage = () => {
     const [planes, setPlanes] = useState([]);
     const [error, setError] = useState(false);
@@ -45,6 +52,19 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
+
+            <section className="actividades">
+                <h2>Qué podés entrenar</h2>
+                <div className="actividades-grid">
+                    {actividades.map(a => (
+                        <article className="actividad" key={a.nombre}>
+                            <img src={a.imagen} alt={a.nombre} />
+                            <h3>{a.nombre}</h3>
+                            <p>{a.texto}</p>
+                        </article>
+                    ))}
+                </div>
+            </section>
 
             <section className="planes">
                 <h2>Nuestros planes</h2>

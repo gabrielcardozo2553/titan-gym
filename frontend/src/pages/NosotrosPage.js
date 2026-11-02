@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
+import Banner from '../components/layout/Banner';
 import '../styles/pages/NosotrosPage.css';
 
 const NosotrosPage = () => {
@@ -17,6 +18,8 @@ const NosotrosPage = () => {
     }, []);
 
     return (
+        <>
+        <Banner imagen="/images/banners/nosotros.svg" alt="Equipo de Titan Gym" />
         <main className="holder">
             <div className="historia">
                 <h2>Nuestra historia</h2>
@@ -43,6 +46,7 @@ const NosotrosPage = () => {
                 </div>
             </div>
         </main>
+        </>
     );
 }
 

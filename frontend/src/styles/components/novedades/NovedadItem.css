@@ -47,3 +47,9 @@
 }
 
 .novedad .fecha { color: var(--muted); }
+
+.novedad img.ilustracion {
+    max-height: 220px;
+    object-fit: cover;
+    object-position: center;
+}
