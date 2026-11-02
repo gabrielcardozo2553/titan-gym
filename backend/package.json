@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "titan-gym-backend",
   "version": "1.0.0",
-  "description": "Backend de Transportes X - envio de formulario de contacto",
+  "description": "API y panel de administración de Titan Gym",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
