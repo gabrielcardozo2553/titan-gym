@@ -50,9 +50,9 @@
 
 .slide h2 {
     margin: 10px 0 12px;
-    max-width: 560px;
+    max-width: 600px;
     color: #fff;
-    font-size: clamp(2.3rem, 6vw, 4rem);
+    font-size: clamp(1.8rem, 5vw, 3rem);
     font-weight: 800;
 }
 
@@ -73,15 +73,15 @@
     transition: background .2s, border-color .2s;
 }
 
-.btn-principal { background: var(--lima); color: var(--negro); }
-.btn-principal:hover { background: var(--lima-oscuro); }
+.btn-principal { background: var(--oro); color: var(--negro); }
+.btn-principal:hover { background: var(--oro-oscuro); }
 
 .btn-secundario {
     color: #fff;
     border: 1px solid #52525b;
     background: rgba(15, 15, 16, .5);
 }
-.btn-secundario:hover { border-color: var(--lima); color: var(--lima); }
+.btn-secundario:hover { border-color: var(--oro); color: var(--oro); }
 
 .flecha {
     position: absolute;
@@ -98,7 +98,7 @@
     cursor: pointer;
     z-index: 2;
 }
-.flecha:hover { border-color: var(--lima); color: var(--lima); }
+.flecha:hover { border-color: var(--oro); color: var(--oro); }
 .flecha.izq { left: 14px; }
 .flecha.der { right: 14px; }
 
@@ -127,7 +127,7 @@
 .puntos button.activo {
     width: 28px;
     border-radius: 6px;
-    background: var(--lima);
+    background: var(--oro);
 }
 
 @media (max-width: 640px) {

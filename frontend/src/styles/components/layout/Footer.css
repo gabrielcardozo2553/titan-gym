@@ -1,6 +1,7 @@
 footer {
+    position: relative;
     background: var(--gris);
-    border-top: 3px solid var(--lima);
+    border-top: 3px solid var(--oro);
     color: var(--muted);
     text-align: center;
     padding: 36px 20px;
@@ -8,5 +9,6 @@ footer {
     font-size: .9rem;
 }
 
+footer::before { top: 6px; }
 footer p { margin: 4px 0; }
 footer strong { color: var(--texto); }
