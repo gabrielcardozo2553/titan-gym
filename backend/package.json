@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend de Transportes X - envio de formulario de contacto",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "cloudinary": "^2.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-fileupload": "^1.5.2",
+    "express-handlebars": "^9.0.1",
+    "express-session": "^1.19.0",
+    "md5": "^2.3.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.24.3",
+    "nodemailer": "^6.9.13",
+    "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
