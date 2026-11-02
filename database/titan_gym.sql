@@ -4,6 +4,8 @@
 -- Uso:  mysql -u root -p < database/titan_gym.sql
 -- ============================================================
 
+SET NAMES utf8mb4;
+
 DROP DATABASE IF EXISTS titan_gym;
 CREATE DATABASE titan_gym CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE titan_gym;
