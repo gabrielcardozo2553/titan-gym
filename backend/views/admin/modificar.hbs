@@ -1,31 +1,28 @@
-<div class="container" style="margin:50px auto">
+<div class="container">
     <div class="row">
-        <div class="col-6 offset-3">
-            <h4>Modificar la novedad</h4>
-            {{#if error}}
-                <h5>{{message}}</h5>
-            {{/if}}
+        <div class="col-12 col-md-8 col-lg-6 mx-auto">
+            <h4 class="mb-3">Modificar la novedad</h4>
+            {{#if error}}<div class="alert alert-danger">{{message}}</div>{{/if}}
             <form method="post" action="/admin/novedades/modificar" enctype="multipart/form-data">
                 <input type="hidden" value="{{novedad.id}}" name="id">
-                <div class="form-group">
-                    <input type="text" placeholder="Titulo" value="{{novedad.titulo}}" class="form-control" name="titulo">
+                <div class="mb-3"><input type="text" placeholder="Título" value="{{novedad.titulo}}" class="form-control" name="titulo"></div>
+                <div class="mb-3"><textarea placeholder="Subtítulo" class="form-control" name="subtitulo">{{novedad.subtitulo}}</textarea></div>
+                <div class="mb-3"><textarea placeholder="Cuerpo" rows="5" class="form-control" name="cuerpo">{{novedad.cuerpo}}</textarea></div>
+                <div class="mb-3">
+                    <label class="form-label">Categoría</label>
+                    <select class="form-select" name="categoria">
+                        {{#each categorias}}<option value="{{valor}}" {{#if seleccionada}}selected{{/if}}>{{valor}}</option>{{/each}}
+                    </select>
                 </div>
-                <div class="form-group">
-                    <textarea placeholder="Subtitulo" class="form-control" name="subtitulo">{{novedad.subtitulo}}</textarea>
-                </div>
-                <div class="form-group">
-                    <textarea placeholder="Cuerpo" class="form-control" name="cuerpo">{{novedad.cuerpo}}</textarea>
-                </div>
-                <div class="form-group">
+                <div class="mb-3">
+                    <p><label>Imagen: <input type="file" name="imagen" id="imagen"></label></p>
                     <p>
-                        <label>Imagen: <input type="file" name="imagen" id="imagen" /></label>
-                    </p>
-                    <p>
-                        <label><input type="checkbox" name="img_delete" id="img_delete" value="1"> Eliminar imagen actual?</label>
+                        <label><input type="checkbox" name="img_delete" id="img_delete" value="1"> ¿Eliminar imagen actual?</label>
                         <input type="hidden" name="img_original" value="{{novedad.img_id}}">
                     </p>
                 </div>
-                <button type="submit" class="btn btn-primary">Modificar</button>
+                <button type="submit" class="btn btn-lima">Modificar</button>
+                <a href="/admin/novedades" class="btn btn-outline-secondary">Cancelar</a>
             </form>
         </div>
     </div>
