@@ -4,8 +4,8 @@ import '../../styles/components/layout/Footer.css';
 const Footer = () => {
     return (
         <footer>
-            <p><strong>Titan Gym</strong> · Av. Libertad 1450, Corrientes</p>
-            <p>© {new Date().getFullYear()} Titan Gym. Todos los derechos reservados.</p>
+            <p><strong>Atletic Gym</strong> · Av. Libertad 1450, Corrientes</p>
+            <p>© {new Date().getFullYear()} Atletic Gym. Todos los derechos reservados.</p>
         </footer>
     );
 }
