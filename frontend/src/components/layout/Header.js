@@ -5,8 +5,11 @@ const Header = () => {
     return (
         <header>
             <div className="holder">
-                <img src="/images/logo.svg" alt="Logo de Titan Gym" />
-                <h1>Titan <span>Gym</span></h1>
+                <img src="/images/logo.png" alt="Logo de Atletic Gym" />
+                <div className="marca">
+                    <h1>Atletic <span>Gym</span></h1>
+                    <p>Hierro, sudor y gloria</p>
+                </div>
             </div>
         </header>
     );
