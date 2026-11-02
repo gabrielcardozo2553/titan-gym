@@ -78,7 +78,7 @@ const HeroCarousel = () => {
                     style={{ backgroundImage: `url(${s.imagen})` }}
                     aria-hidden={i !== actual}
                 >
-                    <div className="slide-contenido holder">
+                    <div className="slide-contenido">
                         <span className="etiqueta">{s.etiqueta}</span>
                         <h2>{s.titulo}</h2>
                         <p>{s.texto}</p>
