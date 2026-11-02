@@ -29,7 +29,9 @@ const HomePage = () => {
 
     return (
         <>
-        <HeroCarousel />
+        <div className="holder">
+            <HeroCarousel />
+        </div>
         <main className="holder">
             <div className="columnas">
                 <div className="bienvenidos left">
