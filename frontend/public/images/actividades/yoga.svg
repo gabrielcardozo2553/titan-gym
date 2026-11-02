@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f0f10"/><stop offset="1" stop-color="#241a3a"/></linearGradient></defs>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b0b0c"/><stop offset="1" stop-color="#2e1217"/></linearGradient></defs>
   <rect width="600" height="400" fill="url(#g)"/>
-  <g fill="none" stroke="#a78bfa" stroke-opacity=".15" stroke-width="2"><circle cx="480.0" cy="100.0" r="150"/><circle cx="480.0" cy="100.0" r="100"/><circle cx="72.0" cy="380.0" r="120"/></g>
+  <g fill="none" stroke="#d6455d" stroke-opacity=".15" stroke-width="2"><circle cx="480.0" cy="100.0" r="150"/><circle cx="480.0" cy="100.0" r="100"/><circle cx="72.0" cy="380.0" r="120"/></g>
   
-  <circle cx="300" cy="130" r="32" fill="#a78bfa"/>
-  <path d="M300 168c-30 0-48 22-48 52v20h96v-20c0-30-18-52-48-52z" fill="#a78bfa"/>
-  <path d="M150 300c40-30 90-34 150-10 60-24 110-20 150 10-40 26-90 30-150 6-60 24-110 20-150-6z" fill="#c4b5fd"/>
-  <path d="M232 205c-30 10-52 28-60 52M368 205c30 10 52 28 60 52" fill="none" stroke="#a78bfa" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="300" cy="130" r="32" fill="#d6455d"/>
+  <path d="M300 168c-30 0-48 22-48 52v20h96v-20c0-30-18-52-48-52z" fill="#d6455d"/>
+  <path d="M150 300c40-30 90-34 150-10 60-24 110-20 150 10-40 26-90 30-150 6-60 24-110 20-150-6z" fill="#f08a9b"/>
+  <path d="M232 205c-30 10-52 28-60 52M368 205c30 10 52 28 60 52" fill="none" stroke="#d6455d" stroke-width="14" stroke-linecap="round"/>
 </svg>

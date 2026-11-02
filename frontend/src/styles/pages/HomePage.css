@@ -14,7 +14,7 @@
 
 .testimonio {
     background: var(--gris);
-    border-left: 4px solid var(--lima);
+    border-left: 4px solid var(--oro);
     border-radius: 6px;
     padding: 16px;
     margin-bottom: 14px;
@@ -47,20 +47,20 @@
 }
 
 .plan.destacado {
-    border: 2px solid var(--lima);
+    border: 2px solid var(--oro);
     transform: translateY(-6px);
 }
 
 .plan h3 {
     margin: 0 0 8px;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
 }
 
 .plan .precio {
     font-family: var(--fuente-titulos);
-    font-size: 2.2rem;
+    font-size: 1.9rem;
     font-weight: 700;
-    color: var(--lima);
+    color: var(--oro);
     margin: 0 0 8px;
 }
 
@@ -78,7 +78,7 @@
     position: absolute;
     top: -12px;
     right: 16px;
-    background: var(--lima);
+    background: var(--oro);
     color: var(--negro);
     font-size: .75rem;
     font-weight: 700;
@@ -111,7 +111,7 @@
 
 .actividad:hover {
     transform: translateY(-4px);
-    border-color: var(--lima);
+    border-color: var(--oro);
 }
 
 .actividad img {
@@ -123,7 +123,7 @@
 
 .actividad h3 {
     margin: 12px 16px 4px;
-    font-size: 1.5rem;
+    font-size: 1.15rem;
 }
 
 .actividad p {

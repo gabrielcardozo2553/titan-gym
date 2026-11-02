@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Entrenador LF">
-  <rect width="200" height="200" fill="#f97316"/>
+  <rect width="200" height="200" fill="#e8590c"/>
   <circle cx="100" cy="78" r="34" fill="#ffffff" fill-opacity=".85"/>
   <path d="M30 200c0-44 31-72 70-72s70 28 70 72z" fill="#ffffff" fill-opacity=".85"/>
-  <text x="100" y="188" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="22" fill="#f97316">LF</text>
+  <text x="100" y="188" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="22" fill="#e8590c">LF</text>
 </svg>

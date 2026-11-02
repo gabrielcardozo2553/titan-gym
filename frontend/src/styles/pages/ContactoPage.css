@@ -40,7 +40,7 @@
 .formulario p input:focus,
 .formulario p textarea:focus {
     outline: none;
-    border-color: var(--lima);
+    border-color: var(--oro);
 }
 
 .formulario p:nth-child(4) { align-items: flex-start; }
@@ -51,13 +51,13 @@
 }
 
 .formulario input[type="submit"] {
-    background: var(--lima);
+    background: var(--oro);
     color: var(--negro);
     border: none;
     font-family: var(--fuente-titulos);
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 700;
-    letter-spacing: .08em;
+    letter-spacing: .1em;
     text-transform: uppercase;
     padding: 8px 28px;
     width: auto;
@@ -65,13 +65,13 @@
     transition: background .2s;
 }
 
-.formulario input[type="submit"]:hover:not(:disabled) { background: var(--lima-oscuro); }
+.formulario input[type="submit"]:hover:not(:disabled) { background: var(--oro-oscuro); }
 .formulario input[type="submit"]:disabled { opacity: .6; cursor: not-allowed; }
 
 .formulario .acciones { padding-left: 98px; }
 
 .formulario .estado { padding-left: 98px; color: var(--muted); }
-.formulario .estado.ok { color: var(--lima); }
+.formulario .estado.ok { color: var(--oro); }
 .formulario .estado.error { color: #fb7185; }
 
 @media (max-width: 760px) {

@@ -8,7 +8,7 @@
 
 .novedad h3 {
     margin: 8px 0 4px;
-    font-size: 1.9rem;
+    font-size: 1.45rem;
 }
 
 .novedad h4 {
@@ -38,7 +38,7 @@
 }
 
 .novedad .categoria {
-    background: var(--lima);
+    background: var(--oro);
     color: var(--negro);
     font-weight: 700;
     text-transform: uppercase;
