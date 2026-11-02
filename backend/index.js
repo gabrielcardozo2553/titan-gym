@@ -10,11 +10,12 @@ const fileUpload = require('express-fileupload');
 const apiRouter = require('./api');
 const loginRouter = require('./routes/admin/login');
 const novedadesRouter = require('./routes/admin/novedades');
+const contactosRouter = require('./routes/admin/contactos');
 
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true
 }));
 app.use(express.json());
@@ -34,29 +35,31 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({
-    secret: 'transportesSecret',
+    secret: process.env.SESSION_SECRET || 'titan-gym-dev-secret',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
 
-const secured = async (req, res, next) => {
-    try {
-        if (req.session.id_usuario) {
-            next();
-        } else {
-            res.redirect('/admin/login');
-        }
-    } catch (error) {
-        console.log(error);
+// Middleware: solo deja pasar a usuarios que iniciaron sesión
+const secured = (req, res, next) => {
+    if (req.session.id_usuario) {
+        return next();
     }
+    res.redirect('/admin/login');
 };
 
 app.use('/api', apiRouter);
 app.use('/admin/login', loginRouter);
 app.use('/admin/novedades', secured, novedadesRouter);
+app.use('/admin/contactos', secured, contactosRouter);
+
+// Ruta inexistente
+app.use((req, res) => {
+    res.status(404).json({ error: true, message: 'Ruta no encontrada' });
+});
 
 const PORT = process.env.APP_PORT || 4000;
 
 app.listen(PORT, () => {
-    console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor de Titan Gym corriendo en http://localhost:${PORT}`);
 });
