@@ -2,39 +2,34 @@ const express = require('express');
 const router = express.Router();
 const usuariosModel = require('../../models/usuariosModel');
 
-router.get('/', function (req, res, next) {
-    res.render('admin/login', {
-        layout: 'admin/layout',
-    });
+router.get('/', (req, res) => {
+    res.render('admin/login', { layout: 'admin/layout' });
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
     try {
-        var usuario = req.body.usuario;
-        var password = req.body.password;
+        const { usuario, password } = req.body;
+        const data = await usuariosModel.getUserByUsernameAndPassword(usuario, password);
 
-        var data = await usuariosModel.getUserByUsernameAndPassword(usuario, password);
-
-        if (data != undefined) {
+        if (data) {
             req.session.id_usuario = data.id;
             req.session.nombre = data.usuario;
             res.redirect('/admin/novedades');
         } else {
-            res.render('admin/login', {
-                layout: 'admin/layout',
-                error: true
-            });
+            res.render('admin/login', { layout: 'admin/layout', error: true });
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        res.status(500).render('admin/login', {
+            layout: 'admin/layout',
+            error: true,
+            message: 'Error del servidor, intentá de nuevo.'
+        });
     }
 });
 
-router.get('/logout', function (req, res, next) {
-    req.session.destroy();
-    res.render('admin/login', {
-        layout: 'admin/layout'
-    });
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => res.redirect('/admin/login'));
 });
 
 module.exports = router;
