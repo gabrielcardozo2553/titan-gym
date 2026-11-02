@@ -1,43 +1,31 @@
-var pool = require('../db');
+const pool = require('../db');
 
 async function getNovedades() {
-    var query = "select * from novedades order by fecha desc";
-    var rows = await pool.query(query);
-    return rows;
+    const query = 'select * from novedades order by fecha desc';
+    return pool.query(query);
 }
 
 async function getNovedadById(id) {
-    var query = "select * from novedades where id = ? ";
-    var rows = await pool.query(query, [id]);
+    const query = 'select * from novedades where id = ?';
+    const rows = await pool.query(query, [id]);
     return rows[0];
 }
 
 async function insertNovedad(obj) {
-    try {
-        obj.fecha = new Date(); // completamos la fecha automáticamente
-        var query = "insert into novedades set ? ";
-        var rows = await pool.query(query, [obj]);
-        return rows;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+    // La fecha se completa automáticamente al crear la novedad
+    obj.fecha = new Date();
+    const query = 'insert into novedades set ?';
+    return pool.query(query, [obj]);
 }
 
 async function modificarNovedadById(obj, id) {
-    try {
-        var query = "update novedades set ? where id=?";
-        var rows = await pool.query(query, [obj, id]);
-        return rows;
-    } catch (error) {
-        throw error;
-    }
+    const query = 'update novedades set ? where id = ?';
+    return pool.query(query, [obj, id]);
 }
 
 async function deleteNovedadById(id) {
-    var query = "delete from novedades where id = ? ";
-    var rows = await pool.query(query, [id]);
-    return rows;
+    const query = 'delete from novedades where id = ?';
+    return pool.query(query, [id]);
 }
 
-module.exports = { getNovedades, getNovedadById, insertNovedad, modificarNovedadById, deleteNovedadById }
+module.exports = { getNovedades, getNovedadById, insertNovedad, modificarNovedadById, deleteNovedadById };
