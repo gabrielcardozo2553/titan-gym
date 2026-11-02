@@ -1,79 +1,45 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { API_URL } from '../config';
 import '../styles/pages/NosotrosPage.css';
 
-const NosotrosPage = (props) => {
+const NosotrosPage = () => {
+    const [entrenadores, setEntrenadores] = useState([]);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        axios.get(`${API_URL}/api/entrenadores`)
+            .then(response => setEntrenadores(response.data))
+            .catch(err => {
+                console.error(err);
+                setError(true);
+            });
+    }, []);
+
     return (
         <main className="holder">
             <div className="historia">
-                <h2>Historia</h2>
-                <p>Lorem ipsum dolor sit, amet consectetur
-                    adipisicing elit. Consequuntur, rem saepe. A
-                    enim qui facilis consectetur. Tempora dolores
-                    culpa libero a natus fugit ea ratione
-                    reprehenderit,
-                    consequuntur, debitis corrupti asperiores.</p>
-                <p>Ipsum dolor sit, amet consectetur
-                    adipisicing elit. Consequuntur, rem saepe. A
-                    enim qui facilis consectetur. Tempora dolores
-                    culpa libero a natus fugit ea ratione
-                    reprehenderit, consequuntur, debitis corrupti
-                    asperiores.</p>
+                <h2>Nuestra historia</h2>
+                <p>Titan Gym nació en 2018 con una idea simple: un lugar donde cualquier persona,
+                    sin importar su nivel, pueda entrenar con buena guía y buen ambiente.</p>
+                <p>Empezamos con una sala chica y cinco socios. Hoy somos una comunidad de más de
+                    400 personas que comparten la misma meta: moverse mejor, sentirse fuertes y
+                    disfrutar del proceso.</p>
             </div>
+
             <div className="staff">
-                <h2>Staff</h2>
+                <h2>Nuestro equipo</h2>
+                {error && <p className="aviso">No pudimos cargar el equipo en este momento.</p>}
                 <div className="personas">
-                    <div className="persona">
-                        <img src="/images/nosotros/nosotros1.jpg" alt="Juan Gomez" />
-                        <h5>Juan Gomez</h5>
-                        <h6>Gerente General</h6>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Obcaecati
-                            aspernatur deleniti, endis mollitia
-                            voluptas est accusantium veritatis
-                            quidem, autem architecto commodi
-                            cumque, suscipit nobis molestias!
-                            Voluptatibus esse quibusdam sunt
-                            architecto.</p>
-                    </div>
-                    <div className="persona">
-                        <img src="/images/nosotros/nosotros2.jpg" alt="Maria Lopez" />
-                        <h5>Maria Lopez</h5>
-                        <h6>Subgerente</h6>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Obcaecati
-                            aspernatur deleniti, endis mollitia
-                            voluptas est accusantium veritatis
-                            quidem, autem architecto commodi.</p>
-                    </div>
-                    <div className="persona">
-                        <img src="/images/nosotros/nosotros3.jpg" alt="Carlos Diaz" />
-                        <h5>Carlos Diaz</h5>
-                        <h6>Jefe de Flota</h6>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Obcaecati
-                            aspernatur deleniti, endis mollitia
-                            voluptas est accusantium veritatis
-                            quidem, autem architecto commodi.</p>
-                    </div>
-                    <div className="persona">
-                        <img src="/images/nosotros/nosotros4.jpg" alt="Ana Torres" />
-                        <h5>Ana Torres</h5>
-                        <h6>Atención al Cliente</h6>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Obcaecati
-                            aspernatur deleniti, endis mollitia
-                            voluptas est accusantium veritatis
-                            quidem, autem architecto commodi.</p>
-                    </div>
-                    <div className="persona">
-                        <img src="/images/nosotros/nosotros5.jpg" alt="Pedro Sosa" />
-                        <h5>Pedro Sosa</h5>
-                        <h6>Logística</h6>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Obcaecati
-                            aspernatur deleniti, endis mollitia
-                            voluptas est accusantium veritatis
-                            quidem, autem architecto commodi.</p>
-                    </div>
+                    {entrenadores.map(e => (
+                        <div className="persona" key={e.id}>
+                            <img src={e.foto} alt={e.nombre} />
+                            <h5>{e.nombre}</h5>
+                            <h6>{e.cargo}</h6>
+                            <span className="especialidad">{e.especialidad}</span>
+                            <p>{e.bio}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </main>
