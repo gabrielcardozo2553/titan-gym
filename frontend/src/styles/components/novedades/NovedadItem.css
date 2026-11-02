@@ -1,0 +1,49 @@
+.novedad {
+    background: var(--gris);
+    border: 1px solid var(--gris-claro);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+.novedad h3 {
+    margin: 8px 0 4px;
+    font-size: 1.9rem;
+}
+
+.novedad h4 {
+    margin: 0 0 12px;
+    font-family: 'Inter', Arial, sans-serif;
+    text-transform: none;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--muted);
+}
+
+.novedad img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.novedad .cuerpo { color: #d4d4d8; }
+
+.novedad-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: .8rem;
+}
+
+.novedad .categoria {
+    background: var(--lima);
+    color: var(--negro);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+
+.novedad .fecha { color: var(--muted); }
