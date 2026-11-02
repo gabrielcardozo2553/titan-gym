@@ -1,62 +1,81 @@
 .contacto {
     display: flex;
-    gap: 24px;
+    gap: 32px;
 }
 
-.contacto div {
-    width: 100%;
-}
+.contacto > div { width: 100%; }
 
-.datos p {
-    font-size: 14px;
-}
+.datos p { color: #d4d4d8; }
 
-.datos ul li {
-    font-size: 13px;
+.datos ul {
+    padding-left: 18px;
+    color: var(--muted);
+    line-height: 1.9;
 }
 
 .formulario p {
     display: flex;
+    gap: 8px;
 }
 
 .formulario p label {
-    min-width: 80px;
+    min-width: 90px;
     display: flex;
     align-items: center;
+    color: var(--muted);
 }
 
 .formulario p input,
 .formulario p textarea {
     width: 100%;
-    background: #ddd;
-    border-radius: 5px;
-    border: 1px solid #999;
-    font-size: 14px;
-    padding: 6px 10px;
+    background: var(--gris);
+    color: var(--texto);
+    border-radius: 6px;
+    border: 1px solid var(--gris-claro);
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 9px 12px;
 }
 
-.formulario p:nth-child(4) {
-    align-items: start;
+.formulario p input:focus,
+.formulario p textarea:focus {
+    outline: none;
+    border-color: var(--lima);
 }
+
+.formulario p:nth-child(4) { align-items: flex-start; }
 
 .formulario textarea {
-    resize: none;
+    resize: vertical;
     height: 150px;
 }
 
 .formulario input[type="submit"] {
-    background: #6da9ed;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    color: white;
-    font-size: 16px;
-    padding: 6px 20px;
+    background: var(--lima);
+    color: var(--negro);
+    border: none;
+    font-family: var(--fuente-titulos);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 8px 28px;
     width: auto;
-    position: relative;
-    left: 80px;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: background .2s;
 }
 
-.formulario input[type="submit"]:hover {
-    background-color: #2e64a1;
+.formulario input[type="submit"]:hover:not(:disabled) { background: var(--lima-oscuro); }
+.formulario input[type="submit"]:disabled { opacity: .6; cursor: not-allowed; }
+
+.formulario .acciones { padding-left: 98px; }
+
+.formulario .estado { padding-left: 98px; color: var(--muted); }
+.formulario .estado.ok { color: var(--lima); }
+.formulario .estado.error { color: #fb7185; }
+
+@media (max-width: 760px) {
+    .contacto { flex-direction: column; gap: 0; }
+    .formulario p { flex-direction: column; }
+    .formulario .acciones, .formulario .estado { padding-left: 0; }
 }
