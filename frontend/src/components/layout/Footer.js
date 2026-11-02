@@ -1,10 +1,11 @@
 import React from 'react';
 import '../../styles/components/layout/Footer.css';
 
-const Footer = (props) => {
+const Footer = () => {
     return (
         <footer>
-            <p>Derechos reservados. Transporte X año</p>
+            <p><strong>Titan Gym</strong> · Av. Libertad 1450, Corrientes</p>
+            <p>© {new Date().getFullYear()} Titan Gym. Todos los derechos reservados.</p>
         </footer>
     );
 }

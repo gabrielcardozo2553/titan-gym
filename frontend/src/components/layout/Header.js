@@ -1,15 +1,15 @@
 import React from 'react';
 import '../../styles/components/layout/Header.css';
 
-const Header = (props) => {
+const Header = () => {
     return (
         <header>
             <div className="holder">
-                <img src="/images/logo.jpg" width="100" alt="Transportes X" />
-                <h1>Transportes X</h1>
+                <img src="/images/logo.svg" alt="Logo de Titan Gym" />
+                <h1>Titan <span>Gym</span></h1>
             </div>
         </header>
-    )
+    );
 }
 
 export default Header;
