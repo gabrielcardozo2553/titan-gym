@@ -1,90 +1,90 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import '../styles/pages/ContactoPage.css';
 
-const ContactoPage = (props) => {
+const initialForm = {
+    nombre: '',
+    email: '',
+    telefono: '',
+    mensaje: ''
+};
 
-    const initialForm = {
-        nombre: '',
-        email: '',
-        telefono: '',
-        mensaje: ''
-    }
-
+const ContactoPage = () => {
     const [sending, setSending] = useState(false);
     const [msg, setMsg] = useState('');
+    const [exito, setExito] = useState(false);
     const [formData, setFormData] = useState(initialForm);
 
     const handleChange = e => {
         const { name, value } = e.target;
         setFormData(oldData => ({
             ...oldData,
-            [name]: value //forma dinamica
+            [name]: value // clave dinámica según el name del input
         }));
-    }
+    };
 
     const handleSubmit = async e => {
         e.preventDefault();
         setMsg('');
-        setSending(true)
+        setSending(true);
         try {
-            const response = await axios.post('http://localhost:3000/api/contacto', formData);
-            setSending(false);
+            const response = await axios.post(`${API_URL}/api/contacto`, formData);
             setMsg(response.data.message);
-            if (response.data.error === false) {
-                setFormData(initialForm)
-            }
+            setExito(true);
+            setFormData(initialForm);
         } catch (err) {
+            // El backend devuelve un mensaje claro (por ejemplo, campos faltantes)
+            setMsg(err.response?.data?.message || 'Ocurrió un error al enviar el mensaje. Intentá nuevamente.');
+            setExito(false);
+        } finally {
             setSending(false);
-            setMsg('Ocurrió un error al enviar el mensaje. Intente nuevamente.');
         }
-    }
+    };
 
     return (
         <main className="holder contacto">
             <div>
-                <h2>Contacto Rápido</h2>
+                <h2>Consultá sin compromiso</h2>
                 <form className="formulario" onSubmit={handleSubmit}>
                     <p>
                         <label htmlFor="nombre">Nombre</label>
-                        <input type="text" name="nombre" value={formData.nombre}
+                        <input type="text" id="nombre" name="nombre" value={formData.nombre}
                             onChange={handleChange} />
                     </p>
                     <p>
                         <label htmlFor="email">Email</label>
-                        <input type="text" name="email" value={formData.email}
+                        <input type="email" id="email" name="email" value={formData.email}
                             onChange={handleChange} />
                     </p>
                     <p>
-                        <label htmlFor="telefono">Telefono</label>
-                        <input type="text" name="telefono" value={formData.telefono}
+                        <label htmlFor="telefono">Teléfono</label>
+                        <input type="text" id="telefono" name="telefono" value={formData.telefono}
                             onChange={handleChange} />
                     </p>
                     <p>
                         <label htmlFor="mensaje">Mensaje</label>
-                        <textarea name="mensaje" value={formData.mensaje}
+                        <textarea id="mensaje" name="mensaje" value={formData.mensaje}
                             onChange={handleChange}></textarea>
                     </p>
-                    {sending ? <p>Enviando...</p> : null}
-                    {msg ? <p>{msg}</p> : null}
-                    <p className="acciones"><input type="submit" value="Enviar" /></p>
+                    {sending ? <p className="estado">Enviando...</p> : null}
+                    {msg ? <p className={`estado ${exito ? 'ok' : 'error'}`}>{msg}</p> : null}
+                    <p className="acciones"><input type="submit" value="Enviar" disabled={sending} /></p>
                 </form>
-
             </div>
             <div className="datos">
-                <h2>Otras vias de comunicación</h2>
-                <p>También puede contactarse con nosotros
-                    usando los siguientes medios</p>
+                <h2>Dónde encontrarnos</h2>
+                <p>Visitanos o escribinos por cualquiera de estos medios:</p>
                 <ul>
-                    <li>Teléfono: 43242388</li>
-                    <li>Email: contacto@transportesx.com.ar</li>
-                    <li>Facebook:</li>
-                    <li>Twitter:</li>
-                    <li>Skype:</li>
+                    <li>Dirección: Av. Libertad 1450, Corrientes</li>
+                    <li>Teléfono: 379 412-3456</li>
+                    <li>Email: contacto@titangym.example</li>
+                    <li>Instagram: @titangym.ctes</li>
+                    <li>Horarios: lunes a viernes de 7 a 22 h, sábados de 9 a 14 h</li>
                 </ul>
             </div>
         </main>
-    )
+    );
 }
 
 export default ContactoPage;
