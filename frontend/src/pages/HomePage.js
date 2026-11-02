@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
+import HeroCarousel from '../components/home/HeroCarousel';
 import '../styles/pages/HomePage.css';
 
 const formatearPrecio = (valor) =>
@@ -27,11 +28,9 @@ const HomePage = () => {
     }, []);
 
     return (
+        <>
+        <HeroCarousel />
         <main className="holder">
-            <div className="homeimg">
-                <img src="/images/home/hero.svg" alt="Barra con discos y lema: superá tus límites" />
-            </div>
-
             <div className="columnas">
                 <div className="bienvenidos left">
                     <h2>Bienvenidos</h2>
@@ -53,7 +52,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <section className="actividades">
+            <section className="actividades" id="actividades">
                 <h2>Qué podés entrenar</h2>
                 <div className="actividades-grid">
                     {actividades.map(a => (
@@ -66,7 +65,7 @@ const HomePage = () => {
                 </div>
             </section>
 
-            <section className="planes">
+            <section className="planes" id="planes">
                 <h2>Nuestros planes</h2>
                 {error && <p className="aviso">No pudimos cargar los planes en este momento.</p>}
                 <div className="planes-grid">
@@ -82,6 +81,7 @@ const HomePage = () => {
                 </div>
             </section>
         </main>
+        </>
     );
 }
 
