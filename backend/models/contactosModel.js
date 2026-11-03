@@ -1,12 +1,17 @@
 const pool = require('../db');
 
-async function insertContacto({ nombre, email, telefono, motivo, mensaje }) {
+async function insertContacto({ nombre, email, telefono, motivo, id_plan, mensaje }) {
     const query = 'insert into contactos set ?';
-    return pool.query(query, [{ nombre, email, telefono, motivo, mensaje }]);
+    return pool.query(query, [{ nombre, email, telefono, motivo, id_plan, mensaje }]);
 }
 
+// Incluye el nombre del plan de interés (relación contactos -> planes)
 async function getContactos() {
-    return pool.query('select * from contactos order by fecha desc');
+    const query = `select c.*, p.nombre as plan
+                   from contactos c
+                   left join planes p on p.id = c.id_plan
+                   order by c.fecha desc`;
+    return pool.query(query);
 }
 
 async function deleteContactoById(id) {

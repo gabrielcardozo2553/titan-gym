@@ -1,6 +1,8 @@
 require('dotenv').config();
 
+const os = require('os');
 const path = require('path');
+const crypto = require('crypto');
 const express = require('express');
 const cors = require('cors');
 const exphbs = require('express-handlebars');
@@ -21,23 +23,40 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Subida de imágenes: carpeta temporal del sistema (funciona en Windows, Mac y Linux) y tope de 5 MB
 app.use(fileUpload({
     useTempFiles: true,
-    tempFileDir: '/tmp/'
+    tempFileDir: os.tmpdir(),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    abortOnLimit: true
 }));
 
 app.engine('hbs', exphbs.engine({
     extname: 'hbs',
     layoutsDir: path.join(__dirname, 'views'),
-    defaultLayout: false
+    defaultLayout: false,
+    helpers: {
+        // Muestra las fechas del panel como 20/10/2026, 10:00
+        fecha: (valor) => valor
+            ? new Date(valor).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })
+            : ''
+    }
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
+// El secreto de sesión sale del .env; si falta se genera uno temporal (las sesiones se pierden al reiniciar)
+let sessionSecret = process.env.SESSION_SECRET;
+if (!sessionSecret) {
+    sessionSecret = crypto.randomBytes(32).toString('hex');
+    console.warn('Aviso: falta SESSION_SECRET en el archivo .env. Se usa una clave temporal.');
+}
+
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'atletic-gym-dev-secret',
+    secret: sessionSecret,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { httpOnly: true, sameSite: 'lax', maxAge: 1000 * 60 * 60 * 8 }
 }));
 
 // Middleware: solo deja pasar a usuarios que iniciaron sesión
@@ -47,6 +66,16 @@ const secured = (req, res, next) => {
     }
     res.redirect('/admin/login');
 };
+
+// Ruta raíz: resumen de la API (útil para comprobar que el servidor está andando)
+app.get('/', (req, res) => {
+    res.json({
+        nombre: 'API de Atletic Gym',
+        endpoints: ['/api/novedades', '/api/planes', '/api/entrenadores', 'POST /api/contacto'],
+        panel: '/admin/login'
+    });
+});
+app.get('/admin', (req, res) => res.redirect('/admin/login'));
 
 app.use('/api', apiRouter);
 app.use('/admin/login', loginRouter);
@@ -58,8 +87,28 @@ app.use((req, res) => {
     res.status(404).json({ error: true, message: 'Ruta no encontrada' });
 });
 
+// Errores no controlados (por ejemplo, un JSON mal formado): respuesta limpia en lugar de romper el servidor
+app.use((err, req, res, next) => {
+    console.error(err);
+    if (res.headersSent) return next(err);
+    const status = err.status || 500;
+    res.status(status).json({
+        error: true,
+        message: status === 400 ? 'Solicitud inválida' : 'Error interno del servidor'
+    });
+});
+
 const PORT = process.env.APP_PORT || 4000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Servidor de Atletic Gym corriendo en http://localhost:${PORT}`);
+});
+
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`El puerto ${PORT} ya está en uso. Cerrá el otro programa o cambiá APP_PORT en el .env.`);
+    } else {
+        console.error(err);
+    }
+    process.exit(1);
 });

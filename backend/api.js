@@ -15,16 +15,16 @@ const esc = (t = '') => String(t).replace(/[&<>"']/g, c => ({
 }[c]));
 
 // Envía el mensaje por mail solo si hay un SMTP configurado en el .env
-async function enviarMail({ nombre, email, telefono, motivo, mensaje }) {
+async function enviarMail({ nombre, email, telefono, motivo, plan, mensaje }) {
     if (!process.env.SMTP_HOST) return;
 
-    const transporter = nodemailer.createTransport({
+    const smtp = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: Number(process.env.SMTP_PORT) || 587,
         auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
     });
 
-    await transporter.sendMail({
+    await smtp.sendMail({
         from: process.env.SMTP_USER,
         to: process.env.CONTACT_TO || process.env.SMTP_USER,
         replyTo: email,
@@ -32,6 +32,7 @@ async function enviarMail({ nombre, email, telefono, motivo, mensaje }) {
         html: `<p><strong>Nombre:</strong> ${esc(nombre)}</p>
                <p><strong>Email:</strong> ${esc(email)}</p>
                <p><strong>Motivo:</strong> ${esc(motivo) || '-'}</p>
+               <p><strong>Plan de interés:</strong> ${esc(plan) || '-'}</p>
                <p><strong>Teléfono:</strong> ${esc(telefono) || '-'}</p>
                <p><strong>Mensaje:</strong> ${esc(mensaje)}</p>`
     });
@@ -54,17 +55,29 @@ router.post('/contacto', async (req, res) => {
     }
 
     try {
-        await contactosModel.insertContacto({ nombre, email, telefono, motivo, mensaje });
+        // El plan de interés es opcional, pero si viene tiene que existir en la base
+        let id_plan = null;
+        let plan = null;
+        if (req.body.id_plan !== undefined && req.body.id_plan !== null && req.body.id_plan !== '') {
+            const numero = Number(req.body.id_plan);
+            plan = Number.isInteger(numero) && numero > 0 ? await planesModel.getPlanById(numero) : undefined;
+            if (!plan) {
+                return res.status(400).json({ error: true, message: 'El plan elegido no es válido.' });
+            }
+            id_plan = plan.id;
+        }
+
+        await contactosModel.insertContacto({ nombre, email, telefono, motivo, id_plan, mensaje });
+
+        // El mensaje ya quedó guardado; si falla el mail solo se registra el error
+        try {
+            await enviarMail({ nombre, email, telefono, motivo, plan: plan ? plan.nombre : null, mensaje });
+        } catch (err) {
+            console.error('No se pudo enviar el mail:', err.message);
+        }
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: true, message: 'No pudimos guardar tu mensaje.' });
-    }
-
-    try {
-        await enviarMail({ nombre, email, telefono, motivo, mensaje });
-    } catch (err) {
-        // El mensaje ya quedó guardado; solo registramos el fallo del mail
-        console.error('No se pudo enviar el mail:', err.message);
     }
 
     res.status(201).json({ error: false, message: '¡Mensaje enviado! Te respondemos a la brevedad.' });

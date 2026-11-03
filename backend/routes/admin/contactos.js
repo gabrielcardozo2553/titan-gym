@@ -17,7 +17,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/eliminar/:id', async (req, res) => {
+// Baja (por POST para que un link externo no pueda borrar datos)
+router.post('/eliminar/:id', async (req, res) => {
     try {
         await contactosModel.deleteContactoById(req.params.id);
     } catch (error) {
