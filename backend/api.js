@@ -28,7 +28,7 @@ async function enviarMail({ nombre, email, telefono, mensaje }) {
         from: process.env.SMTP_USER,
         to: process.env.CONTACT_TO || process.env.SMTP_USER,
         replyTo: email,
-        subject: `Nueva consulta de ${nombre} - Titan Gym`,
+        subject: `Nueva consulta de ${nombre} - Atletic Gym`,
         html: `<p><strong>Nombre:</strong> ${esc(nombre)}</p>
                <p><strong>Email:</strong> ${esc(email)}</p>
                <p><strong>Teléfono:</strong> ${esc(telefono) || '-'}</p>

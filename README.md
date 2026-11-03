@@ -1,4 +1,4 @@
-# Titan Gym
+# Atletic Gym
 
 Sitio web de un gimnasio, desarrollado como **Quinta Evaluación de Práctica Profesional II (2026)**.
 Es una adaptación del proyecto de clase *Transportes* (Front-end con React + Back-end con Node/Express y MySQL) a una temática nueva: un gimnasio y centro de entrenamiento.
@@ -19,11 +19,11 @@ Además hay un **panel de administración** (`/admin/login`) para dar de alta, m
 ## Estructura del repositorio
 
 ```
-titan-gym/
+atletic-gym/
 ├── backend/     API REST + panel admin (Node, Express, Handlebars, MySQL)
 ├── frontend/    Sitio público (React)
 └── database/
-    └── titan_gym.sql    Esquema + datos de ejemplo
+    └── atletic_gym.sql    Esquema + datos de ejemplo
 ```
 
 ## Modelo de datos
@@ -41,10 +41,10 @@ Requisitos: Node.js 18+ y MySQL 5.7+ / MariaDB 10.4+.
 ### 1. Base de datos
 
 ```bash
-mysql -u root -p < database/titan_gym.sql
+mysql -u root -p < database/atletic_gym.sql
 ```
 
-> El script **borra y recrea** la base `titan_gym`. Crea el usuario de prueba `admin` / `admin123`.
+> El script **borra y recrea** la base `atletic_gym`. Crea el usuario de prueba `admin` / `admin123`.
 
 ### 2. Backend
 

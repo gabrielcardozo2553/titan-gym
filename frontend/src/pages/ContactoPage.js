@@ -45,7 +45,7 @@ const ContactoPage = () => {
 
     return (
         <>
-        <Banner imagen="/images/banners/contacto.svg" alt="Contacto con Titan Gym" />
+        <Banner imagen="/images/banners/contacto.svg" alt="Contacto con Atletic Gym" />
         <main className="holder contacto">
             <div>
                 <h2>Consultá sin compromiso</h2>
@@ -81,8 +81,8 @@ const ContactoPage = () => {
                 <ul>
                     <li>Dirección: Av. Libertad 1450, Corrientes</li>
                     <li>Teléfono: 379 412-3456</li>
-                    <li>Email: contacto@titangym.example</li>
-                    <li>Instagram: @titangym.ctes</li>
+                    <li>Email: contacto@atleticgym.example</li>
+                    <li>Instagram: @atleticgym.ctes</li>
                     <li>Horarios: lunes a viernes de 7 a 22 h, sábados de 9 a 14 h</li>
                 </ul>
             </div>

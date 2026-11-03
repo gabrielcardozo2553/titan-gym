@@ -5,8 +5,8 @@ const slides = [
     {
         imagen: '/images/home/slide1.svg',
         etiqueta: 'Empezá hoy',
-        titulo: 'Superá tus límites en Titan Gym',
-        texto: 'Tu primera clase de prueba es sin costo.',
+        titulo: 'Hierro, sudor y gloria',
+        texto: 'Así se forjan los verdaderos físicos. Tu primera clase de prueba es sin costo.',
         botones: [
             { texto: 'Ver planes', href: '#planes', principal: true },
             { texto: 'Conocer más', href: '/nosotros' }
@@ -65,7 +65,7 @@ const HeroCarousel = () => {
         <section
             className="carrusel"
             aria-roledescription="carrusel"
-            aria-label="Destacados de Titan Gym"
+            aria-label="Destacados de Atletic Gym"
             onMouseEnter={() => setPausado(true)}
             onMouseLeave={() => setPausado(false)}
             onFocus={() => setPausado(true)}

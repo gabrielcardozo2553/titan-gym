@@ -21,7 +21,7 @@ const Novedades = () => {
 
     return (
         <>
-        <Banner imagen="/images/banners/novedades.svg" alt="Novedades de Titan Gym" />
+        <Banner imagen="/images/banners/novedades.svg" alt="Novedades de Atletic Gym" />
         <section className="holder">
             <h2>Novedades</h2>
 
