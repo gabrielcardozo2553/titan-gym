@@ -35,7 +35,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'titan-gym-dev-secret',
+    secret: process.env.SESSION_SECRET || 'atletic-gym-dev-secret',
     resave: false,
     saveUninitialized: false
 }));
@@ -61,5 +61,5 @@ app.use((req, res) => {
 const PORT = process.env.APP_PORT || 4000;
 
 app.listen(PORT, () => {
-    console.log(`Servidor de Titan Gym corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor de Atletic Gym corriendo en http://localhost:${PORT}`);
 });

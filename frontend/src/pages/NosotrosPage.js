@@ -19,11 +19,11 @@ const NosotrosPage = () => {
 
     return (
         <>
-        <Banner imagen="/images/banners/nosotros.svg" alt="Equipo de Titan Gym" />
+        <Banner imagen="/images/banners/nosotros.svg" alt="Equipo de Atletic Gym" />
         <main className="holder">
             <div className="historia">
                 <h2>Nuestra historia</h2>
-                <p>Titan Gym nació en 2018 con una idea simple: un lugar donde cualquier persona,
+                <p>Atletic Gym nació en 2018 con una idea simple: un lugar donde cualquier persona,
                     sin importar su nivel, pueda entrenar con buena guía y buen ambiente.</p>
                 <p>Empezamos con una sala chica y cinco socios. Hoy somos una comunidad de más de
                     400 personas que comparten la misma meta: moverse mejor, sentirse fuertes y

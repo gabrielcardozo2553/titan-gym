@@ -36,7 +36,7 @@ const HomePage = () => {
             <div className="columnas">
                 <div className="bienvenidos left">
                     <h2>Bienvenidos</h2>
-                    <p>En Titan Gym entrenás a tu ritmo, con profesores que te acompañan en cada serie.
+                    <p>En Atletic Gym entrenás a tu ritmo, con profesores que te acompañan en cada serie.
                         Tenemos sala de musculación, zona funcional, clases grupales de HIIT y yoga,
                         y asesoramiento nutricional para que llegues a tus objetivos.</p>
                     <p>Pasá por recepción y hacé tu primera clase de prueba sin costo.</p>

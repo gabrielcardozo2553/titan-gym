@@ -1,7 +1,7 @@
 {
-  "name": "titan-gym-backend",
+  "name": "atletic-gym-backend",
   "version": "1.0.0",
-  "description": "API y panel de administración de Titan Gym",
+  "description": "API y panel de administración de Atletic Gym",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
