@@ -32,8 +32,10 @@ CREATE TABLE novedades (
   img_id     VARCHAR(255) NULL,              -- public_id de Cloudinary
   categoria  ENUM('clases','eventos','consejos','promociones') NOT NULL DEFAULT 'clases',
   fecha      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  id_usuario INT UNSIGNED NULL,              -- admin que publico la novedad (FK a usuarios)
   PRIMARY KEY (id),
-  KEY idx_novedades_fecha (fecha)
+  KEY idx_novedades_fecha (fecha),
+  KEY idx_novedades_usuario (id_usuario)
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
@@ -71,11 +73,27 @@ CREATE TABLE contactos (
   email     VARCHAR(150) NOT NULL,
   telefono  VARCHAR(30)  NULL,
   motivo    VARCHAR(60)  NULL,               -- motivo de la consulta elegido en el formulario
+  id_plan   INT UNSIGNED NULL,               -- plan por el que consulta (FK a planes)
   mensaje   TEXT         NOT NULL,
   fecha     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  KEY idx_contactos_fecha (fecha)
+  KEY idx_contactos_fecha (fecha),
+  KEY idx_contactos_plan (id_plan)
 ) ENGINE=InnoDB;
+
+-- ------------------------------------------------------------
+-- Relaciones entre tablas (claves foraneas)
+--   usuarios 1 --- N novedades   (quien publico cada novedad)
+--   planes   1 --- N contactos   (plan por el que consulta cada mensaje)
+-- Si se borra el usuario o el plan, el registro queda con NULL.
+-- ------------------------------------------------------------
+ALTER TABLE novedades
+  ADD CONSTRAINT fk_novedades_usuario FOREIGN KEY (id_usuario)
+  REFERENCES usuarios (id) ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE contactos
+  ADD CONSTRAINT fk_contactos_plan FOREIGN KEY (id_plan)
+  REFERENCES planes (id) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- ============================================================
 -- DATOS DE EJEMPLO
@@ -107,24 +125,24 @@ INSERT INTO entrenadores (nombre, cargo, especialidad, bio, foto) VALUES
    'Licenciado en Nutrición. Realiza planes alimentarios personalizados para los socios del gimnasio.',
    '/images/nosotros/entrenador5.svg');
 
-INSERT INTO novedades (titulo, subtitulo, cuerpo, img_id, categoria, fecha) VALUES
+INSERT INTO novedades (titulo, subtitulo, cuerpo, img_id, categoria, fecha, id_usuario) VALUES
   ('Nueva clase de HIIT los sábados',
    'Arrancamos el fin de semana con 45 minutos de alta intensidad.',
    '<p>Desde este mes sumamos una clase de <strong>HIIT</strong> los sábados a las 9:00. Cupos limitados a 20 personas, reservá tu lugar en recepción.</p>',
-   NULL, 'clases', '2026-10-20 10:00:00'),
+   NULL, 'clases', '2026-10-20 10:00:00', 1),
   ('Torneo interno de press de banca',
    'Inscripción abierta para socios de todos los niveles.',
    '<p>El <strong>14 de noviembre</strong> se realiza el torneo interno. Habrá categorías por peso corporal y premios para los tres primeros puestos.</p>',
-   NULL, 'eventos', '2026-10-25 12:30:00'),
+   NULL, 'eventos', '2026-10-25 12:30:00', 1),
   ('Cinco consejos para no perder la rutina',
    'Pequeños hábitos que hacen la diferencia.',
    '<p>Dormí bien, planificá tus entrenamientos como una reunión, preparate la ropa la noche anterior, entrená acompañado y celebrá cada logro.</p>',
-   NULL, 'consejos', '2026-10-28 18:15:00'),
+   NULL, 'consejos', '2026-10-28 18:15:00', 1),
   ('Promo de verano: inscripción gratis',
    'Sumate durante noviembre y no pagás la matrícula.',
    '<p>Si te inscribís en un plan <strong>Full</strong> antes de fin de mes, la matrícula va por nuestra cuenta.</p>',
-   NULL, 'promociones', '2026-10-30 09:00:00');
+   NULL, 'promociones', '2026-10-30 09:00:00', 1);
 
-INSERT INTO contactos (nombre, email, telefono, motivo, mensaje, fecha) VALUES
-  ('Sofía Medina', 'sofia.medina@example.com', '3794123456', 'Consulta sobre clases',
+INSERT INTO contactos (nombre, email, telefono, motivo, id_plan, mensaje, fecha) VALUES
+  ('Sofía Medina', 'sofia.medina@example.com', '3794123456', 'Consulta sobre clases', 2,
    'Hola, quería saber si tienen clases de yoga por la mañana.', '2026-10-29 14:20:00');
