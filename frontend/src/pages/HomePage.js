@@ -2,17 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
 import HeroCarousel from '../components/home/HeroCarousel';
+import ActividadesSelector from '../components/home/ActividadesSelector';
 import '../styles/pages/HomePage.css';
 
 const formatearPrecio = (valor) =>
     Number(valor).toLocaleString('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
-
-const actividades = [
-    { nombre: 'Musculación', imagen: '/images/actividades/musculacion.svg', texto: 'Sala equipada con máquinas y peso libre.' },
-    { nombre: 'Funcional y HIIT', imagen: '/images/actividades/funcional.svg', texto: 'Clases grupales de alta intensidad.' },
-    { nombre: 'Yoga y movilidad', imagen: '/images/actividades/yoga.svg', texto: 'Flexibilidad, respiración y recuperación.' },
-    { nombre: 'Nutrición', imagen: '/images/actividades/nutricion.svg', texto: 'Planes alimentarios personalizados.' }
-];
 
 const HomePage = () => {
     const [planes, setPlanes] = useState([]);
@@ -33,38 +27,17 @@ const HomePage = () => {
             <HeroCarousel />
         </div>
         <main className="holder">
-            <div className="columnas">
-                <div className="bienvenidos left">
-                    <h2>Bienvenidos</h2>
-                    <p>En Atletic Gym entrenás a tu ritmo, con profesores que te acompañan en cada serie.
-                        Tenemos sala de musculación, zona funcional, clases grupales de HIIT y yoga,
-                        y asesoramiento nutricional para que llegues a tus objetivos.</p>
-                    <p>Pasá por recepción y hacé tu primera clase de prueba sin costo.</p>
-                </div>
-                <div className="testimonios right">
-                    <h2>Testimonios</h2>
-                    <div className="testimonio">
-                        <span className="cita">“En tres meses recuperé fuerza y energía. El equipo es genial.”</span>
-                        <span className="autor">Sofía M. · socia desde 2025</span>
-                    </div>
-                    <div className="testimonio">
-                        <span className="cita">“Las clases de HIIT me cambiaron el día. Muy buen ambiente.”</span>
-                        <span className="autor">Matías R. · socio desde 2024</span>
-                    </div>
-                </div>
-            </div>
+            <section className="bienvenidos">
+                <h2>Bienvenidos</h2>
+                <p>En Atletic Gym entrenás a tu ritmo, con profesores que te acompañan en cada serie.
+                    Tenemos sala de musculación, zona funcional, clases grupales de HIIT y yoga,
+                    y asesoramiento nutricional para que llegues a tus objetivos.</p>
+                <p>Pasá por recepción y hacé tu primera clase de prueba sin costo.</p>
+            </section>
 
             <section className="actividades" id="actividades">
                 <h2>Qué podés entrenar</h2>
-                <div className="actividades-grid">
-                    {actividades.map(a => (
-                        <article className="actividad" key={a.nombre}>
-                            <img src={a.imagen} alt={a.nombre} />
-                            <h3>{a.nombre}</h3>
-                            <p>{a.texto}</p>
-                        </article>
-                    ))}
-                </div>
+                <ActividadesSelector />
             </section>
 
             <section className="planes" id="planes">
@@ -80,6 +53,20 @@ const HomePage = () => {
                             <p className="dias">{plan.dias_por_semana} días por semana</p>
                         </article>
                     ))}
+                </div>
+            </section>
+
+            <section className="testimonios">
+                <h2>Lo que dicen nuestros socios</h2>
+                <div className="testimonios-grid">
+                    <div className="testimonio">
+                        <span className="cita">“En tres meses recuperé fuerza y energía. El equipo es genial.”</span>
+                        <span className="autor">Sofía M. · socia desde 2025</span>
+                    </div>
+                    <div className="testimonio">
+                        <span className="cita">“Las clases de HIIT me cambiaron el día. Muy buen ambiente.”</span>
+                        <span className="autor">Matías R. · socio desde 2024</span>
+                    </div>
                 </div>
             </section>
         </main>
