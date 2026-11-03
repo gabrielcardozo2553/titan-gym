@@ -1,7 +1,7 @@
 # Atletic Gym
 
 Sitio web de un gimnasio, desarrollado como **Quinta Evaluación de Práctica Profesional II (2026)**.
-Es una adaptación del proyecto de clase *Transportes* (Front-end con React + Back-end con Node/Express y MySQL) a una temática nueva: un gimnasio y centro de entrenamiento.
+Es una adaptación del proyecto base visto en clase (Front-end con React + Back-end con Node/Express y MySQL) a una temática nueva: un gimnasio y centro de entrenamiento. Se cambiaron la temática, el diseño, los textos, las imágenes, el logo, el modelo de datos y el back-end.
 
 ## Secciones del sitio
 
@@ -9,7 +9,7 @@ Se mantienen las mismas 4 secciones del sitio original:
 
 | Sección | Qué muestra |
 |---|---|
-| **Home** | Bienvenida, testimonios y planes de membresía (desde la base de datos) |
+| **Home** | Carrusel, bienvenida, selector interactivo de actividades, planes de membresía (desde la base de datos) y testimonios |
 | **Nosotros** | Historia del gimnasio y equipo de entrenadores (desde la base de datos) |
 | **Novedades** | Clases nuevas, eventos, consejos y promociones cargadas desde el panel admin |
 | **Contacto** | Formulario que guarda el mensaje en la base de datos (y lo envía por mail si hay SMTP) |
@@ -29,10 +29,15 @@ atletic-gym/
 ## Modelo de datos
 
 - `usuarios` — administradores del panel.
-- `novedades` — título, subtítulo, cuerpo, imagen (Cloudinary), categoría y fecha.
+- `novedades` — título, subtítulo, cuerpo, imagen (Cloudinary), categoría, fecha y `id_usuario` (quién la publicó).
 - `planes` — membresías con precio, días por semana y marca de destacado.
 - `entrenadores` — equipo del gimnasio (nombre, cargo, especialidad, bio, foto).
-- `contactos` — mensajes enviados desde el formulario.
+- `contactos` — mensajes del formulario: motivo y `id_plan` (plan de interés, opcional).
+
+Relaciones (claves foráneas, `ON DELETE SET NULL`):
+
+- `usuarios` 1 — N `novedades` (`novedades.id_usuario`)
+- `planes` 1 — N `contactos` (`contactos.id_plan`)
 
 ## Puesta en marcha
 
@@ -76,9 +81,17 @@ Cloudinary y SMTP son opcionales: sin Cloudinary las novedades se muestran sin i
 | GET | `/api/novedades` | Lista de novedades (más recientes primero) |
 | GET | `/api/planes` | Planes de membresía |
 | GET | `/api/entrenadores` | Equipo de entrenadores |
-| POST | `/api/contacto` | Guarda un mensaje (`nombre`, `email`, `telefono`, `mensaje`) |
+| POST | `/api/contacto` | Guarda un mensaje (`nombre`, `email`, `mensaje` obligatorios; `telefono`, `motivo`, `id_plan` opcionales). Responde 201, o 400 con un mensaje si hay datos inválidos |
 
 Panel admin (requiere sesión): `/admin/login`, `/admin/novedades`, `/admin/contactos`.
+
+## Seguridad y buenas prácticas
+
+- Las contraseñas del panel usan MD5 por ser el patrón visto en clase; **para un uso real conviene cambiar a bcrypt** y cambiar la clave `admin123`.
+- `SESSION_SECRET` se define en `.env`; las cookies de sesión son `httpOnly`.
+- Las bajas del panel se hacen por `POST` con confirmación; la subida de imágenes acepta solo archivos de imagen de hasta 5 MB.
+- Las consultas usan parámetros (`?`) para evitar inyección SQL.
+- Los secretos (`.env`) están en `.gitignore`; solo se sube `.env.example`.
 
 ## Tecnologías
 
