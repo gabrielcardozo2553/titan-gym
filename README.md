@@ -90,6 +90,7 @@ Panel admin (requiere sesión): `/admin/login`, `/admin/novedades`, `/admin/cont
 - Las contraseñas del panel usan MD5 por ser el patrón visto en clase; **para un uso real conviene cambiar a bcrypt** y cambiar la clave `admin123`.
 - `SESSION_SECRET` se define en `.env`; las cookies de sesión son `httpOnly`.
 - Las bajas del panel se hacen por `POST` con confirmación; la subida de imágenes acepta solo archivos de imagen de hasta 5 MB.
+- `helmet` agrega cabeceras de seguridad y `express-rate-limit` limita los envíos del formulario y los intentos de login (10 cada 15 minutos por IP).
 - Las consultas usan parámetros (`?`) para evitar inyección SQL.
 - Los secretos (`.env`) están en `.gitignore`; solo se sube `.env.example`.
 
