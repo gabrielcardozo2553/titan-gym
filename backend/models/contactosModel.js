@@ -1,8 +1,8 @@
 const pool = require('../db');
 
-async function insertContacto({ nombre, email, telefono, mensaje }) {
+async function insertContacto({ nombre, email, telefono, motivo, mensaje }) {
     const query = 'insert into contactos set ?';
-    return pool.query(query, [{ nombre, email, telefono, mensaje }]);
+    return pool.query(query, [{ nombre, email, telefono, motivo, mensaje }]);
 }
 
 async function getContactos() {

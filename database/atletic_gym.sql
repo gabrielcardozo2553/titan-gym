@@ -70,6 +70,7 @@ CREATE TABLE contactos (
   nombre    VARCHAR(100) NOT NULL,
   email     VARCHAR(150) NOT NULL,
   telefono  VARCHAR(30)  NULL,
+  motivo    VARCHAR(60)  NULL,               -- motivo de la consulta elegido en el formulario
   mensaje   TEXT         NOT NULL,
   fecha     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -124,6 +125,6 @@ INSERT INTO novedades (titulo, subtitulo, cuerpo, img_id, categoria, fecha) VALU
    '<p>Si te inscribís en un plan <strong>Full</strong> antes de fin de mes, la matrícula va por nuestra cuenta.</p>',
    NULL, 'promociones', '2026-10-30 09:00:00');
 
-INSERT INTO contactos (nombre, email, telefono, mensaje, fecha) VALUES
-  ('Sofía Medina', 'sofia.medina@example.com', '3794123456',
+INSERT INTO contactos (nombre, email, telefono, motivo, mensaje, fecha) VALUES
+  ('Sofía Medina', 'sofia.medina@example.com', '3794123456', 'Consulta sobre clases',
    'Hola, quería saber si tienen clases de yoga por la mañana.', '2026-10-29 14:20:00');
