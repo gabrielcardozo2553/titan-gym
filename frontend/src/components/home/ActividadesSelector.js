@@ -51,7 +51,7 @@ const ActividadesSelector = () => {
             {/* Imagen y descripción de la actividad elegida (key reinicia la animación) */}
             <article className="selector-card" key={actual.id} aria-live="polite">
                 <div className="selector-imagen">
-                    <img src={actual.imagen} alt={`Foto de ${actual.nombre}`} />
+                    <img loading="lazy" src={actual.imagen} alt={`Foto de ${actual.nombre}`} />
                 </div>
                 <div className="selector-info">
                     <div className="chips">
@@ -76,7 +76,7 @@ const ActividadesSelector = () => {
                             onClick={() => setSeleccionada(a.id)}
                             onMouseEnter={() => setSeleccionada(a.id)}
                         >
-                            <img src={a.imagen} alt="" />
+                            <img loading="lazy" src={a.imagen} alt="" />
                             <span className="textos">
                                 <strong>{a.nombre}</strong>
                                 <small>{a.categoria}</small>

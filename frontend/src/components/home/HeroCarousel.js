@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/components/home/HeroCarousel.css';
 
 const slides = [
@@ -84,14 +85,25 @@ const HeroCarousel = () => {
                         <p>{s.texto}</p>
                         <div className="botones">
                             {s.botones.map(b => (
-                                <a
-                                    key={b.texto}
-                                    href={b.href}
-                                    className={b.principal ? 'btn-principal' : 'btn-secundario'}
-                                    tabIndex={i === actual ? 0 : -1}
-                                >
-                                    {b.texto}{b.principal ? ' →' : ''}
-                                </a>
+                                b.href.startsWith('/') ? (
+                                    <Link
+                                        key={b.texto}
+                                        to={b.href}
+                                        className={b.principal ? 'btn-principal' : 'btn-secundario'}
+                                        tabIndex={i === actual ? 0 : -1}
+                                    >
+                                        {b.texto}{b.principal ? ' →' : ''}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        key={b.texto}
+                                        href={b.href}
+                                        className={b.principal ? 'btn-principal' : 'btn-secundario'}
+                                        tabIndex={i === actual ? 0 : -1}
+                                    >
+                                        {b.texto}{b.principal ? ' →' : ''}
+                                    </a>
+                                )
                             ))}
                         </div>
                     </div>
