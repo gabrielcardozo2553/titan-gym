@@ -9,7 +9,7 @@ const actividades = [
         nombre: 'Musculación',
         categoria: 'Fuerza',
         nivel: 'Medio',
-        imagen: '/images/actividades/musculacion.svg',
+        imagen: '/images/actividades/musculacion.jpg',
         texto: 'Sala equipada con máquinas y peso libre. Rutinas armadas por un profesor según tu objetivo: ganar fuerza, masa muscular o definición.',
         detalle: 'Para todo el mundo. Te enseñamos la técnica desde el primer día.'
     },
@@ -18,7 +18,7 @@ const actividades = [
         nombre: 'Funcional y HIIT',
         categoria: 'Cardio',
         nivel: 'Alto',
-        imagen: '/images/actividades/funcional.svg',
+        imagen: '/images/actividades/funcional.jpg',
         texto: 'Clases grupales de alta intensidad que combinan fuerza y resistencia. Quemás calorías y mejorás tu rendimiento en 45 minutos.',
         detalle: 'Cupos limitados. Se adapta a cada nivel.'
     },
@@ -27,7 +27,7 @@ const actividades = [
         nombre: 'Yoga y movilidad',
         categoria: 'Mente-cuerpo',
         nivel: 'Bajo',
-        imagen: '/images/actividades/yoga.svg',
+        imagen: '/images/actividades/yoga.jpg',
         texto: 'Flexibilidad, respiración y recuperación. Ideal para complementar el entrenamiento, prevenir lesiones y bajar el estrés.',
         detalle: 'Para todo el mundo. No tiene contraindicaciones.'
     },
@@ -36,7 +36,7 @@ const actividades = [
         nombre: 'Nutrición',
         categoria: 'Asesoramiento',
         nivel: 'Personalizado',
-        imagen: '/images/actividades/nutricion.svg',
+        imagen: '/images/actividades/nutricion.jpg',
         texto: 'Planes alimentarios personalizados con nuestro nutricionista, para acompañar tu entrenamiento y llegar a tus objetivos.',
         detalle: 'Incluye seguimiento y ajustes mensuales.'
     }
@@ -51,7 +51,7 @@ const ActividadesSelector = () => {
             {/* Imagen y descripción de la actividad elegida (key reinicia la animación) */}
             <article className="selector-card" key={actual.id} aria-live="polite">
                 <div className="selector-imagen">
-                    <img src={actual.imagen} alt={`Ilustración de ${actual.nombre}`} />
+                    <img src={actual.imagen} alt={`Foto de ${actual.nombre}`} />
                 </div>
                 <div className="selector-info">
                     <div className="chips">
