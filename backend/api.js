@@ -15,7 +15,7 @@ const esc = (t = '') => String(t).replace(/[&<>"']/g, c => ({
 }[c]));
 
 // Envía el mensaje por mail solo si hay un SMTP configurado en el .env
-async function enviarMail({ nombre, email, telefono, mensaje }) {
+async function enviarMail({ nombre, email, telefono, motivo, mensaje }) {
     if (!process.env.SMTP_HOST) return;
 
     const transporter = nodemailer.createTransport({
@@ -31,6 +31,7 @@ async function enviarMail({ nombre, email, telefono, mensaje }) {
         subject: `Nueva consulta de ${nombre} - Atletic Gym`,
         html: `<p><strong>Nombre:</strong> ${esc(nombre)}</p>
                <p><strong>Email:</strong> ${esc(email)}</p>
+               <p><strong>Motivo:</strong> ${esc(motivo) || '-'}</p>
                <p><strong>Teléfono:</strong> ${esc(telefono) || '-'}</p>
                <p><strong>Mensaje:</strong> ${esc(mensaje)}</p>`
     });
@@ -39,6 +40,8 @@ async function enviarMail({ nombre, email, telefono, mensaje }) {
 // POST /api/contacto -> guarda el mensaje (y lo envía por mail si hay SMTP)
 router.post('/contacto', async (req, res) => {
     const { nombre, email, telefono, mensaje } = req.body;
+    // El motivo es opcional; se limita el largo para no guardar textos enormes
+    const motivo = req.body.motivo ? String(req.body.motivo).slice(0, 60) : null;
 
     if (!nombre || !email || !mensaje) {
         return res.status(400).json({
@@ -51,14 +54,14 @@ router.post('/contacto', async (req, res) => {
     }
 
     try {
-        await contactosModel.insertContacto({ nombre, email, telefono, mensaje });
+        await contactosModel.insertContacto({ nombre, email, telefono, motivo, mensaje });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: true, message: 'No pudimos guardar tu mensaje.' });
     }
 
     try {
-        await enviarMail({ nombre, email, telefono, mensaje });
+        await enviarMail({ nombre, email, telefono, motivo, mensaje });
     } catch (err) {
         // El mensaje ya quedó guardado; solo registramos el fallo del mail
         console.error('No se pudo enviar el mail:', err.message);
