@@ -1,0 +1,155 @@
+.selector {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+/* ---- Tarjeta grande ---- */
+.selector-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--gris);
+    border: 1px solid var(--gris-claro);
+    border-radius: 14px;
+    overflow: hidden;
+    animation: aparecer .35s ease;
+}
+
+.selector-imagen {
+    flex: 1;
+    min-height: 220px;
+    background: var(--negro);
+}
+
+.selector-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.selector-info {
+    padding: 20px 24px 24px;
+    border-top: 3px solid var(--oro);
+}
+
+.selector-info h3 {
+    margin: 10px 0 8px;
+    font-size: 1.9rem;
+    color: #fff;
+}
+
+.selector-info p {
+    margin: 0 0 8px;
+    color: #d8ccc3;
+}
+
+.selector-info .detalle {
+    font-size: .85rem;
+    color: var(--muted);
+}
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.chip {
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 2px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--gris-claro);
+    color: var(--muted);
+}
+
+.chip.nivel { border-color: currentColor; }
+
+.btn-card {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 24px;
+    border-radius: 999px;
+    background: var(--oro);
+    color: var(--negro);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s;
+}
+
+.btn-card:hover { background: var(--oro-oscuro); }
+
+/* Colores de nivel (se reutilizan en la lista y en la tarjeta) */
+.nivel-bajo { color: #6fcf97; }
+.nivel-medio { color: var(--oro); }
+.nivel-alto { color: #ff6b6b; }
+.nivel-personalizado { color: #e7c9a5; }
+
+/* ---- Lista ---- */
+.selector-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+.selector-lista li { display: flex; }
+
+.selector-lista button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-left: 4px solid transparent;
+    border-radius: 12px;
+    color: var(--muted);
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background .2s, border-color .2s, color .2s;
+}
+
+.selector-lista button:hover,
+.selector-lista button:focus-visible {
+    background: var(--gris);
+    color: var(--texto);
+}
+
+.selector-lista button.activa {
+    background: var(--gris);
+    border-color: var(--gris-claro);
+    border-left-color: var(--oro);
+    color: #fff;
+}
+
+.selector-lista img {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.selector-lista .textos { flex: 1; display: flex; flex-direction: column; }
+.selector-lista strong { font-size: 1rem; }
+.selector-lista small { font-size: .78rem; opacity: .8; }
+.selector-lista .nivel-texto { font-size: .78rem; font-weight: 600; opacity: .55; }
+.selector-lista button.activa .nivel-texto { opacity: 1; }
+
+@keyframes aparecer {
+    from { opacity: .4; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 800px) {
+    .selector { grid-template-columns: 1fr; }
+    .selector-imagen { min-height: 200px; max-height: 260px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .selector-card { animation: none; }
+}
