@@ -1,81 +1,145 @@
-.contacto {
-    display: flex;
-    gap: 32px;
+.contacto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 28px;
+    align-items: start;
+    margin-bottom: 56px;
 }
 
-.contacto > div { width: 100%; }
+.contacto-pagina h2 { margin-top: 0; }
 
-.datos p { color: #d4d4d8; }
+/* ---- Datos ---- */
+.medios { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 12px; }
 
-.datos ul {
-    padding-left: 18px;
-    color: var(--muted);
-    line-height: 1.9;
-}
-
-.formulario p {
-    display: flex;
-    gap: 8px;
-}
-
-.formulario p label {
-    min-width: 90px;
+.medios li {
     display: flex;
     align-items: center;
-    color: var(--muted);
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--gris);
+    border: 1px solid var(--gris-claro);
+    border-radius: 12px;
 }
 
-.formulario p input,
-.formulario p textarea {
-    width: 100%;
+.medios .icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--vino);
+    color: var(--oro);
+}
+
+.medios strong { display: block; font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+.medios div span { color: #fff; }
+
+.horarios {
+    padding: 18px 20px;
+    border: 1px dashed var(--oro);
+    border-radius: 12px;
+}
+
+.horarios h3 { margin: 0 0 10px; color: var(--oro); font-size: 1.1rem; }
+.horarios dl { margin: 0; }
+.horarios dl div { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gris-claro); }
+.horarios dl div:last-child { border-bottom: none; }
+.horarios dt { color: var(--muted); }
+.horarios dd { margin: 0; color: #fff; font-weight: 600; }
+
+/* ---- Formulario ---- */
+.contacto-form {
+    padding: 28px;
     background: var(--gris);
-    color: var(--texto);
-    border-radius: 6px;
     border: 1px solid var(--gris-claro);
+    border-top: 3px solid var(--oro);
+    border-radius: 14px;
+}
+
+.formulario { display: grid; gap: 16px; }
+
+.formulario .fila { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.formulario label {
+    display: grid;
+    gap: 6px;
+    color: var(--muted);
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea {
+    width: 100%;
+    padding: 11px 14px;
+    background: var(--negro);
+    color: var(--texto);
+    border: 1px solid var(--gris-claro);
+    border-radius: 8px;
     font-family: inherit;
     font-size: 1rem;
-    padding: 9px 12px;
 }
 
-.formulario p input:focus,
-.formulario p textarea:focus {
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus {
     outline: none;
     border-color: var(--oro);
+    box-shadow: 0 0 0 3px rgba(240, 162, 46, .18);
 }
 
-.formulario p:nth-child(4) { align-items: flex-start; }
+.formulario textarea { height: 130px; resize: vertical; }
 
-.formulario textarea {
-    resize: vertical;
-    height: 150px;
-}
-
-.formulario input[type="submit"] {
+.formulario button {
+    justify-self: start;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 999px;
     background: var(--oro);
     color: var(--negro);
-    border: none;
-    font-family: var(--fuente-titulos);
+    font-family: inherit;
     font-size: 1rem;
     font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    padding: 8px 28px;
-    width: auto;
     cursor: pointer;
     transition: background .2s;
 }
 
-.formulario input[type="submit"]:hover:not(:disabled) { background: var(--oro-oscuro); }
-.formulario input[type="submit"]:disabled { opacity: .6; cursor: not-allowed; }
+.formulario button:hover:not(:disabled) { background: var(--oro-oscuro); }
+.formulario button:disabled { opacity: .6; cursor: not-allowed; }
 
-.formulario .acciones { padding-left: 98px; }
+.formulario .estado { margin: 0; padding: 10px 14px; border-radius: 8px; font-size: .92rem; }
+.formulario .estado.ok { background: rgba(111, 207, 151, .12); color: #8fe0ae; }
+.formulario .estado.error { background: rgba(255, 107, 107, .12); color: #ff9a9a; }
 
-.formulario .estado { padding-left: 98px; color: var(--muted); }
-.formulario .estado.ok { color: var(--oro); }
-.formulario .estado.error { color: #fb7185; }
+/* ---- Preguntas frecuentes ---- */
+.faq details {
+    margin-bottom: 10px;
+    background: var(--gris);
+    border: 1px solid var(--gris-claro);
+    border-radius: 12px;
+}
 
-@media (max-width: 760px) {
-    .contacto { flex-direction: column; gap: 0; }
-    .formulario p { flex-direction: column; }
-    .formulario .acciones, .formulario .estado { padding-left: 0; }
+.faq summary {
+    padding: 16px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; color: var(--oro); font-size: 1.4rem; line-height: 1; }
+.faq details[open] summary::after { content: '−'; }
+.faq details[open] { border-color: var(--oro); }
+.faq details p { margin: 0; padding: 0 20px 18px; color: #d8ccc3; }
+
+@media (max-width: 800px) {
+    .contacto-grid { grid-template-columns: 1fr; }
+    .formulario .fila { grid-template-columns: 1fr; }
+    .contacto-form { padding: 20px; }
 }
