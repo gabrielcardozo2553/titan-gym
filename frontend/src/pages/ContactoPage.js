@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
 import PageHero from '../components/layout/PageHero';
+import useTitulo from '../hooks/useTitulo';
 import '../styles/pages/ContactoPage.css';
 
 const initialForm = {
@@ -9,6 +10,7 @@ const initialForm = {
     email: '',
     telefono: '',
     motivo: 'Quiero información de planes',
+    id_plan: '',
     mensaje: ''
 };
 
@@ -43,10 +45,19 @@ const Icono = ({ tipo }) => {
 };
 
 const ContactoPage = () => {
+    useTitulo('Contacto');
     const [sending, setSending] = useState(false);
     const [msg, setMsg] = useState('');
     const [exito, setExito] = useState(false);
     const [formData, setFormData] = useState(initialForm);
+    const [planes, setPlanes] = useState([]);
+
+    // Planes para el selector "Plan de interés" (si falla, el campo simplemente no se muestra)
+    useEffect(() => {
+        axios.get(`${API_URL}/api/planes`)
+            .then(res => setPlanes(Array.isArray(res.data) ? res.data : []))
+            .catch(() => setPlanes([]));
+    }, []);
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -135,6 +146,14 @@ const ContactoPage = () => {
                                     {motivos.map(m => <option key={m} value={m}>{m}</option>)}
                                 </select>
                             </label>
+                            {planes.length > 0 && (
+                                <label htmlFor="id_plan">Plan de interés (opcional)
+                                    <select id="id_plan" name="id_plan" value={formData.id_plan} onChange={handleChange}>
+                                        <option value="">Todavía no lo sé</option>
+                                        {planes.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
+                                    </select>
+                                </label>
+                            )}
                             <label htmlFor="mensaje">Mensaje
                                 <textarea id="mensaje" name="mensaje" value={formData.mensaje}
                                     onChange={handleChange} placeholder="Contanos en qué podemos ayudarte"></textarea>

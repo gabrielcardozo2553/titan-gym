@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../config';
 import PageHero from '../components/layout/PageHero';
+import useTitulo from '../hooks/useTitulo';
 import '../styles/pages/NosotrosPage.css';
 
 const hitos = [
@@ -19,6 +20,7 @@ const valores = [
 ];
 
 const NosotrosPage = () => {
+    useTitulo('Nosotros');
     const [entrenadores, setEntrenadores] = useState([]);
     const [error, setError] = useState(false);
 
@@ -86,7 +88,7 @@ const NosotrosPage = () => {
                         {entrenadores.map(e => (
                             <article className="persona" key={e.id}>
                                 <div className="foto">
-                                    <img src={e.foto} alt={e.nombre} />
+                                    <img loading="lazy" src={e.foto} alt={e.nombre} />
                                 </div>
                                 <div className="datos-persona">
                                     <span className="especialidad">{e.especialidad}</span>

@@ -5,7 +5,7 @@ import '../../styles/components/layout/PageHero.css';
 const PageHero = ({ etiqueta, titulo, subtitulo }) => {
     return (
         <section className="page-hero">
-            <img className="page-hero-logo" src="/images/logo.png" alt="" aria-hidden="true" />
+            <img className="page-hero-logo" src="/images/logo.webp" alt="" aria-hidden="true" />
             <div className="holder">
                 <span className="page-hero-etiqueta">{etiqueta}</span>
                 <h2>{titulo}</h2>

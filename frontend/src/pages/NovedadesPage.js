@@ -3,6 +3,7 @@ import axios from 'axios';
 import { API_URL } from '../config';
 import PageHero from '../components/layout/PageHero';
 import NovedadCard from '../components/novedades/NovedadCard';
+import useTitulo from '../hooks/useTitulo';
 import '../styles/pages/NovedadesPage.css';
 
 const filtros = [
@@ -14,6 +15,7 @@ const filtros = [
 ];
 
 const Novedades = () => {
+    useTitulo('Novedades');
     const [novedades, setNovedades] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(false);

@@ -3,12 +3,14 @@ import axios from 'axios';
 import { API_URL } from '../config';
 import HeroCarousel from '../components/home/HeroCarousel';
 import ActividadesSelector from '../components/home/ActividadesSelector';
+import useTitulo from '../hooks/useTitulo';
 import '../styles/pages/HomePage.css';
 
 const formatearPrecio = (valor) =>
     Number(valor).toLocaleString('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 
 const HomePage = () => {
+    useTitulo('');
     const [planes, setPlanes] = useState([]);
     const [error, setError] = useState(false);
 

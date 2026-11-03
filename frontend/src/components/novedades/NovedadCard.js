@@ -17,7 +17,7 @@ const NovedadCard = ({ novedad, destacada = false }) => {
         <article className={`novedad-card ${destacada ? 'destacada' : ''}`}>
             {imagenFinal && (
                 <div className="novedad-imagen">
-                    <img src={imagenFinal} alt={titulo} />
+                    <img loading="lazy" src={imagenFinal} alt={titulo} />
                     {destacada && <span className="sello">Última novedad</span>}
                 </div>
             )}
