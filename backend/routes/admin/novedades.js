@@ -13,10 +13,14 @@ const CATEGORIAS = ['clases', 'eventos', 'consejos', 'promociones'];
 const armarCategorias = (actual) =>
     CATEGORIAS.map(valor => ({ valor, seleccionada: valor === actual }));
 
+// Devuelve la imagen subida (si hay) o undefined
+const archivoImagen = (req) => (req.files && req.files.imagen) ? req.files.imagen : undefined;
+const esImagen = (archivo) => /^image\//.test(archivo.mimetype);
+
 // Listado
 router.get('/', async (req, res) => {
     try {
-        let novedades = await novedadesModel.getNovedades();
+        let novedades = await novedadesModel.getNovedadesConAutor();
 
         novedades = novedades.map(novedad => {
             if (novedad.img_id) {
@@ -52,42 +56,46 @@ router.get('/agregar', (req, res) => {
 
 router.post('/agregar', async (req, res) => {
     const { titulo, subtitulo, cuerpo, categoria } = req.body;
+
+    // Vuelve a mostrar el formulario con un mensaje de error
+    const mostrarError = (message) => res.render('admin/agregar', {
+        layout: 'admin/layout',
+        usuario: req.session.nombre,
+        categorias: armarCategorias(categoria),
+        error: true,
+        message
+    });
+
     try {
         if (!titulo || !subtitulo || !cuerpo) {
-            return res.render('admin/agregar', {
-                layout: 'admin/layout',
-                usuario: req.session.nombre,
-                categorias: armarCategorias(categoria),
-                error: true,
-                message: 'Todos los campos son requeridos'
-            });
+            return mostrarError('Todos los campos son requeridos');
+        }
+
+        const imagen = archivoImagen(req);
+        if (imagen && !esImagen(imagen)) {
+            return mostrarError('El archivo debe ser una imagen (jpg, png, webp...)');
         }
 
         let img_id = null;
-        if (req.files && req.files.imagen) {
-            img_id = (await uploader(req.files.imagen.tempFilePath)).public_id;
+        if (imagen) {
+            img_id = (await uploader(imagen.tempFilePath)).public_id;
         }
 
         await novedadesModel.insertNovedad({
             titulo, subtitulo, cuerpo,
             categoria: CATEGORIAS.includes(categoria) ? categoria : 'clases',
-            img_id
+            img_id,
+            id_usuario: req.session.id_usuario   // quién publicó la novedad
         });
         res.redirect('/admin/novedades');
     } catch (error) {
         console.error(error);
-        res.render('admin/agregar', {
-            layout: 'admin/layout',
-            usuario: req.session.nombre,
-            categorias: armarCategorias(categoria),
-            error: true,
-            message: 'No se cargó la novedad'
-        });
+        mostrarError('No se cargó la novedad');
     }
 });
 
-// Baja
-router.get('/eliminar/:id', async (req, res) => {
+// Baja (por POST para que un link externo no pueda borrar datos)
+router.post('/eliminar/:id', async (req, res) => {
     try {
         const novedad = await novedadesModel.getNovedadById(req.params.id);
         if (novedad && novedad.img_id) {
@@ -119,42 +127,51 @@ router.get('/modificar/:id', async (req, res) => {
 });
 
 router.post('/modificar', async (req, res) => {
+    const { id, titulo, subtitulo, cuerpo, categoria, img_original } = req.body;
+
+    const mostrarError = (message) => res.render('admin/modificar', {
+        layout: 'admin/layout',
+        usuario: req.session.nombre,
+        novedad: { id, titulo, subtitulo, cuerpo, img_id: img_original },
+        categorias: armarCategorias(categoria),
+        error: true,
+        message
+    });
+
     try {
-        let img_id = req.body.img_original || null;
+        if (!titulo || !subtitulo || !cuerpo) {
+            return mostrarError('Todos los campos son requeridos');
+        }
+
+        const imagen = archivoImagen(req);
+        if (imagen && !esImagen(imagen)) {
+            return mostrarError('El archivo debe ser una imagen (jpg, png, webp...)');
+        }
+
+        let img_id = img_original || null;
         let borrar_img_vieja = false;
 
         if (req.body.img_delete === '1') {
             img_id = null;
             borrar_img_vieja = true;
-        } else if (req.files && req.files.imagen) {
-            img_id = (await uploader(req.files.imagen.tempFilePath)).public_id;
+        } else if (imagen) {
+            img_id = (await uploader(imagen.tempFilePath)).public_id;
             borrar_img_vieja = true;
         }
 
-        if (borrar_img_vieja && req.body.img_original) {
-            await destroy(req.body.img_original);
+        if (borrar_img_vieja && img_original) {
+            await destroy(img_original);
         }
 
-        const obj = {
-            titulo: req.body.titulo,
-            subtitulo: req.body.subtitulo,
-            cuerpo: req.body.cuerpo,
-            categoria: CATEGORIAS.includes(req.body.categoria) ? req.body.categoria : 'clases',
+        await novedadesModel.modificarNovedadById({
+            titulo, subtitulo, cuerpo,
+            categoria: CATEGORIAS.includes(categoria) ? categoria : 'clases',
             img_id
-        };
-
-        await novedadesModel.modificarNovedadById(obj, req.body.id);
+        }, id);
         res.redirect('/admin/novedades');
     } catch (error) {
         console.error(error);
-        res.render('admin/modificar', {
-            layout: 'admin/layout',
-            usuario: req.session.nombre,
-            novedad: { ...req.body, img_id: req.body.img_original },
-            categorias: armarCategorias(req.body.categoria),
-            error: true,
-            message: 'No se modificó la novedad'
-        });
+        mostrarError('No se modificó la novedad');
     }
 });
 

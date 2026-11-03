@@ -5,6 +5,15 @@ async function getNovedades() {
     return pool.query(query);
 }
 
+// Para el panel admin: incluye el usuario que publicó la novedad (relación novedades -> usuarios)
+async function getNovedadesConAutor() {
+    const query = `select n.*, u.usuario as autor
+                   from novedades n
+                   left join usuarios u on u.id = n.id_usuario
+                   order by n.fecha desc`;
+    return pool.query(query);
+}
+
 async function getNovedadById(id) {
     const query = 'select * from novedades where id = ?';
     const rows = await pool.query(query, [id]);
@@ -28,4 +37,4 @@ async function deleteNovedadById(id) {
     return pool.query(query, [id]);
 }
 
-module.exports = { getNovedades, getNovedadById, insertNovedad, modificarNovedadById, deleteNovedadById };
+module.exports = { getNovedades, getNovedadesConAutor, getNovedadById, insertNovedad, modificarNovedadById, deleteNovedadById };
