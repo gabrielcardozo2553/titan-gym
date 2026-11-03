@@ -8,6 +8,8 @@ const cors = require('cors');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const apiRouter = require('./api');
 const loginRouter = require('./routes/admin/login');
@@ -20,6 +22,25 @@ app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true
 }));
+
+// Cabeceras de seguridad. La CSP se desactiva porque el panel admin usa Bootstrap por CDN
+// y scripts en línea; el resto de las protecciones de helmet queda activo.
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
+
+// Límite de intentos para frenar spam en el formulario y fuerza bruta en el login
+const limitar = (max, message) => rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: max,
+    standardHeaders: true,
+    legacyHeaders: false,
+    handler: (req, res) => res.status(429).json({ error: true, message })
+});
+app.post('/api/contacto', limitar(10, 'Enviaste muchos mensajes. Probá de nuevo en unos minutos.'));
+app.post('/admin/login', limitar(10, 'Demasiados intentos de ingreso. Probá de nuevo en unos minutos.'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
