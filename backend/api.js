@@ -54,6 +54,12 @@ router.post('/contacto', async (req, res) => {
         return res.status(400).json({ error: true, message: 'El email no es válido.' });
     }
 
+    // Largos máximos (coinciden con las columnas de la base de datos)
+    if (String(nombre).length > 100 || String(email).length > 150 ||
+        (telefono && String(telefono).length > 30) || String(mensaje).length > 2000) {
+        return res.status(400).json({ error: true, message: 'Alguno de los datos es demasiado largo.' });
+    }
+
     try {
         // El plan de interés es opcional, pero si viene tiene que existir en la base
         let id_plan = null;

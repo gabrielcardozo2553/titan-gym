@@ -31,15 +31,17 @@ app.use(helmet({
 }));
 
 // Límite de intentos para frenar spam en el formulario y fuerza bruta en el login
-const limitar = (max, message) => rateLimit({
+const limitar = (max, message, html = false) => rateLimit({
     windowMs: 15 * 60 * 1000,
     limit: max,
     standardHeaders: true,
     legacyHeaders: false,
-    handler: (req, res) => res.status(429).json({ error: true, message })
+    handler: (req, res) => html
+        ? res.status(429).send(message)                       // el login es un formulario HTML
+        : res.status(429).json({ error: true, message })      // la API responde JSON
 });
 app.post('/api/contacto', limitar(10, 'Enviaste muchos mensajes. Probá de nuevo en unos minutos.'));
-app.post('/admin/login', limitar(10, 'Demasiados intentos de ingreso. Probá de nuevo en unos minutos.'));
+app.post('/admin/login', limitar(10, 'Demasiados intentos de ingreso. Probá de nuevo en unos minutos.', true));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

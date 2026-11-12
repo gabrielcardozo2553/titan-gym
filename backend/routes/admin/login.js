@@ -9,12 +9,19 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const { usuario, password } = req.body;
+        if (typeof usuario !== 'string' || typeof password !== 'string' || !usuario || !password) {
+            return res.render('admin/login', { layout: 'admin/layout', error: true });
+        }
         const data = await usuariosModel.getUserByUsernameAndPassword(usuario, password);
 
         if (data) {
-            req.session.id_usuario = data.id;
-            req.session.nombre = data.usuario;
-            res.redirect('/admin/novedades');
+            // Se renueva la sesión al ingresar (evita la fijación de sesión)
+            req.session.regenerate(err => {
+                if (err) throw err;
+                req.session.id_usuario = data.id;
+                req.session.nombre = data.usuario;
+                req.session.save(() => res.redirect('/admin/novedades'));
+            });
         } else {
             res.render('admin/login', { layout: 'admin/layout', error: true });
         }
