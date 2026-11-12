@@ -4,7 +4,6 @@ header {
     padding: 16px 0 22px;
 }
 
-/* Greca (meandro griego) decorativa, igual a la del logo */
 header::after,
 footer::before {
     content: '';

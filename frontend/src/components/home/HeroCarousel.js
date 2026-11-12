@@ -55,7 +55,6 @@ const HeroCarousel = () => {
         setActual((indice + slides.length) % slides.length);
     }, []);
 
-    // Avance automático (se frena al pasar el mouse o enfocar con el teclado)
     useEffect(() => {
         if (pausado) return undefined;
         const id = setInterval(() => setActual(i => (i + 1) % slides.length), INTERVALO);

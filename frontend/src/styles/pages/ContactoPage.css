@@ -8,7 +8,6 @@
 
 .contacto-pagina h2 { margin-top: 0; }
 
-/* ---- Datos ---- */
 .medios { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 12px; }
 
 .medios li {
@@ -49,7 +48,6 @@
 .horarios dt { color: var(--muted); }
 .horarios dd { margin: 0; color: #fff; font-weight: 600; }
 
-/* ---- Formulario ---- */
 .contacto-form {
     padding: 28px;
     background: var(--gris);
@@ -114,7 +112,6 @@
 .formulario .estado.ok { background: rgba(111, 207, 151, .12); color: #8fe0ae; }
 .formulario .estado.error { background: rgba(255, 107, 107, .12); color: #ff9a9a; }
 
-/* ---- Preguntas frecuentes ---- */
 .faq details {
     margin-bottom: 10px;
     background: var(--gris);

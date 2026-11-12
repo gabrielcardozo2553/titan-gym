@@ -4,12 +4,10 @@ import '../../styles/components/novedades/NovedadCard.css';
 const formatearFecha = (fecha) =>
     fecha ? new Date(fecha).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
 
-// Tarjeta de novedad. Con destacada=true se muestra grande y con el texto completo.
 const NovedadCard = ({ novedad, destacada = false }) => {
     const [abierta, setAbierta] = useState(false);
     const { titulo, subtitulo, cuerpo, categoria, fecha, imagen } = novedad;
 
-    // Si no tiene foto propia se usa la ilustración de su categoría
     const imagenFinal = imagen || (categoria ? `/images/novedades/${categoria}.svg` : '');
     const mostrarTexto = destacada || abierta;
 
@@ -29,7 +27,6 @@ const NovedadCard = ({ novedad, destacada = false }) => {
                 <h3>{titulo}</h3>
                 <p className="subtitulo">{subtitulo}</p>
 
-                {/* El cuerpo lo carga el administrador desde el panel */}
                 {mostrarTexto && <div className="texto" dangerouslySetInnerHTML={{ __html: cuerpo }} />}
 
                 {!destacada && (

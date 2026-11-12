@@ -25,7 +25,6 @@
     visibility: visible;
 }
 
-/* Degradé oscuro a la izquierda para que se lea el texto */
 .slide::before {
     content: '';
     position: absolute;

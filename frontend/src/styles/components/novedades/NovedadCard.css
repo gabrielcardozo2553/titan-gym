@@ -55,7 +55,6 @@
 }
 .leer-mas:hover { color: #ffc766; }
 
-/* ---- Versión destacada (grande, imagen a la izquierda) ---- */
 .novedad-card.destacada { flex-direction: row; margin-bottom: 28px; }
 .novedad-card.destacada:hover { transform: none; }
 .novedad-card.destacada .novedad-imagen { flex: 0 0 46%; }

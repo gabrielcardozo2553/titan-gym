@@ -5,7 +5,6 @@ async function insertContacto({ nombre, email, telefono, motivo, id_plan, mensaj
     return pool.query(query, [{ nombre, email, telefono, motivo, id_plan, mensaje }]);
 }
 
-// Incluye el nombre del plan de interés (relación contactos -> planes)
 async function getContactos() {
     const query = `select c.*, p.nombre as plan
                    from contactos c

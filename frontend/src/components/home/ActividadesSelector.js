@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/components/home/ActividadesSelector.css';
 
-// Las 4 actividades del gimnasio. Cada una tiene su ilustración y su descripción.
 const actividades = [
     {
         id: 'musculacion',
@@ -48,7 +47,6 @@ const ActividadesSelector = () => {
 
     return (
         <div className="selector">
-            {/* Imagen y descripción de la actividad elegida (key reinicia la animación) */}
             <article className="selector-card" key={actual.id} aria-live="polite">
                 <div className="selector-imagen">
                     <img loading="lazy" src={actual.imagen} alt={`Foto de ${actual.nombre}`} />
@@ -65,7 +63,6 @@ const ActividadesSelector = () => {
                 </div>
             </article>
 
-            {/* Lista para elegir la actividad */}
             <ul className="selector-lista">
                 {actividades.map(a => (
                     <li key={a.id}>

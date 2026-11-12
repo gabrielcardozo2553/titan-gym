@@ -31,7 +31,6 @@ const Novedades = () => {
             .finally(() => setCargando(false));
     }, []);
 
-    // La API devuelve las novedades de la más nueva a la más vieja
     const visibles = filtro === 'todas' ? novedades : novedades.filter(n => n.categoria === filtro);
     const [destacada, ...resto] = visibles;
 

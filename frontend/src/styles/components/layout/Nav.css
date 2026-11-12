@@ -43,7 +43,6 @@ nav ul li a.activo {
     color: var(--negro);
 }
 
-/* Celulares: letras más chicas para que entren las 4 secciones */
 @media (max-width: 520px) {
     nav ul { padding: 0 8px; }
     nav ul li a { padding: 14px 2px; font-size: .78rem; letter-spacing: .03em; }

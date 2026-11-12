@@ -42,7 +42,6 @@ const NosotrosPage = () => {
             />
 
             <main className="holder nosotros">
-                {/* Números del gimnasio */}
                 <section className="cifras">
                     <div><strong>2018</strong><span>Año de fundación</span></div>
                     <div><strong>+400</strong><span>Socios activos</span></div>
@@ -50,7 +49,6 @@ const NosotrosPage = () => {
                     <div><strong>6</strong><span>Días de atención</span></div>
                 </section>
 
-                {/* Historia en línea de tiempo */}
                 <section className="historia">
                     <h2>Nuestra historia</h2>
                     <ol className="linea-tiempo">
@@ -66,7 +64,6 @@ const NosotrosPage = () => {
                     </ol>
                 </section>
 
-                {/* Valores */}
                 <section className="valores">
                     <h2>Lo que nos define</h2>
                     <div className="valores-grid">
@@ -80,7 +77,6 @@ const NosotrosPage = () => {
                     </div>
                 </section>
 
-                {/* Equipo (datos desde la base) */}
                 <section className="staff">
                     <h2>Nuestro equipo</h2>
                     {error && <p className="aviso">No pudimos cargar el equipo en este momento.</p>}

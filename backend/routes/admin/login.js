@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
         const data = await usuariosModel.getUserByUsernameAndPassword(usuario, password);
 
         if (data) {
-            // Se renueva la sesión al ingresar (evita la fijación de sesión)
+
             req.session.regenerate(err => {
                 if (err) throw err;
                 req.session.id_usuario = data.id;

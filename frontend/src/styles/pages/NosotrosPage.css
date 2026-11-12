@@ -1,7 +1,6 @@
 .nosotros section { margin-bottom: 56px; }
 .nosotros h2 { margin-top: 0; }
 
-/* ---- Cifras ---- */
 .cifras {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -28,7 +27,6 @@
 
 .cifras span { color: var(--muted); font-size: .85rem; }
 
-/* ---- Línea de tiempo ---- */
 .linea-tiempo {
     list-style: none;
     margin: 0;
@@ -66,7 +64,6 @@
 .linea-tiempo h3 { margin: 4px 0 6px; font-size: 1.2rem; color: #fff; }
 .linea-tiempo p { margin: 0; color: #d8ccc3; }
 
-/* ---- Valores ---- */
 .valores-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -96,7 +93,6 @@
 .valores-grid h3 { position: relative; margin: 0 0 8px; font-size: 1.4rem; color: var(--oro); }
 .valores-grid p { position: relative; margin: 0; color: #d8ccc3; }
 
-/* ---- Equipo ---- */
 .personas {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -139,7 +135,6 @@
 .persona h4 { margin: 2px 0 6px; font-family: 'Inter', Arial, sans-serif; font-size: .85rem; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--oro); }
 .persona p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
 
-/* ---- Banda final ---- */
 .cta-banda {
     display: flex;
     align-items: center;

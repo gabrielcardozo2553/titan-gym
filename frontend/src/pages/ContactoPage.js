@@ -29,7 +29,6 @@ const preguntas = [
     { p: '¿Puedo pausar mi plan si viajo?', r: 'Podés congelar tu plan hasta 30 días por año avisando con anticipación en recepción.' }
 ];
 
-// Íconos simples en SVG (sin librerías externas)
 const Icono = ({ tipo }) => {
     const rutas = {
         ubicacion: 'M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z',
@@ -52,7 +51,6 @@ const ContactoPage = () => {
     const [formData, setFormData] = useState(initialForm);
     const [planes, setPlanes] = useState([]);
 
-    // Planes para el selector "Plan de interés" (si falla, el campo simplemente no se muestra)
     useEffect(() => {
         axios.get(`${API_URL}/api/planes`)
             .then(res => setPlanes(Array.isArray(res.data) ? res.data : []))
@@ -63,7 +61,7 @@ const ContactoPage = () => {
         const { name, value } = e.target;
         setFormData(oldData => ({
             ...oldData,
-            [name]: value // clave dinámica según el name del input
+            [name]: value
         }));
     };
 
@@ -71,7 +69,6 @@ const ContactoPage = () => {
         e.preventDefault();
         setMsg('');
 
-        // Validación rápida en el navegador (el backend vuelve a validar)
         if (!formData.nombre.trim() || !formData.email.trim() || !formData.mensaje.trim()) {
             setExito(false);
             setMsg('Completá tu nombre, email y mensaje.');
@@ -85,7 +82,7 @@ const ContactoPage = () => {
             setExito(true);
             setFormData(initialForm);
         } catch (err) {
-            // El backend devuelve un mensaje claro (por ejemplo, un email inválido)
+
             setMsg(err.response?.data?.message || 'Ocurrió un error al enviar el mensaje. Intentá nuevamente.');
             setExito(false);
         } finally {
@@ -103,7 +100,6 @@ const ContactoPage = () => {
 
             <main className="holder contacto-pagina">
                 <div className="contacto-grid">
-                    {/* Datos del gimnasio */}
                     <aside className="contacto-info">
                         <h2>Dónde encontrarnos</h2>
                         <ul className="medios">
@@ -123,7 +119,6 @@ const ContactoPage = () => {
                         </div>
                     </aside>
 
-                    {/* Formulario (se guarda en la base de datos) */}
                     <section className="contacto-form">
                         <h2>Escribinos</h2>
                         <form className="formulario" onSubmit={handleSubmit} noValidate>
@@ -168,7 +163,6 @@ const ContactoPage = () => {
                     </section>
                 </div>
 
-                {/* Preguntas frecuentes */}
                 <section className="faq">
                     <h2>Preguntas frecuentes</h2>
                     {preguntas.map(item => (

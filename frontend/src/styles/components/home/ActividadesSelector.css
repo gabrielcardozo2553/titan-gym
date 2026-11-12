@@ -5,7 +5,6 @@
     align-items: stretch;
 }
 
-/* ---- Tarjeta grande ---- */
 .selector-card {
     display: flex;
     flex-direction: column;
@@ -77,13 +76,11 @@
 
 .btn-card:hover { background: var(--oro-oscuro); }
 
-/* Colores de nivel (se reutilizan en la lista y en la tarjeta) */
 .nivel-bajo { color: #6fcf97; }
 .nivel-medio { color: var(--oro); }
 .nivel-alto { color: #ff6b6b; }
 .nivel-personalizado { color: #e7c9a5; }
 
-/* ---- Lista ---- */
 .selector-lista {
     list-style: none;
     margin: 0;

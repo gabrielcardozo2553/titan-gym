@@ -9,15 +9,12 @@ const destroy = util.promisify(cloudinary.uploader.destroy);
 
 const CATEGORIAS = ['clases', 'eventos', 'consejos', 'promociones'];
 
-// Marca como seleccionada la categoría actual para el <select> de la vista
 const armarCategorias = (actual) =>
     CATEGORIAS.map(valor => ({ valor, seleccionada: valor === actual }));
 
-// Devuelve la imagen subida (si hay) o undefined
 const archivoImagen = (req) => (req.files && req.files.imagen) ? req.files.imagen : undefined;
 const esImagen = (archivo) => /^image\//.test(archivo.mimetype);
 
-// Listado
 router.get('/', async (req, res) => {
     try {
         let novedades = await novedadesModel.getNovedadesConAutor();
@@ -45,7 +42,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Alta
 router.get('/agregar', (req, res) => {
     res.render('admin/agregar', {
         layout: 'admin/layout',
@@ -57,7 +53,6 @@ router.get('/agregar', (req, res) => {
 router.post('/agregar', async (req, res) => {
     const { titulo, subtitulo, cuerpo, categoria } = req.body;
 
-    // Vuelve a mostrar el formulario con un mensaje de error
     const mostrarError = (message) => res.render('admin/agregar', {
         layout: 'admin/layout',
         usuario: req.session.nombre,
@@ -85,7 +80,7 @@ router.post('/agregar', async (req, res) => {
             titulo, subtitulo, cuerpo,
             categoria: CATEGORIAS.includes(categoria) ? categoria : 'clases',
             img_id,
-            id_usuario: req.session.id_usuario   // quién publicó la novedad
+            id_usuario: req.session.id_usuario
         });
         res.redirect('/admin/novedades');
     } catch (error) {
@@ -94,7 +89,6 @@ router.post('/agregar', async (req, res) => {
     }
 });
 
-// Baja (por POST para que un link externo no pueda borrar datos)
 router.post('/eliminar/:id', async (req, res) => {
     try {
         const novedad = await novedadesModel.getNovedadById(req.params.id);
@@ -108,7 +102,6 @@ router.post('/eliminar/:id', async (req, res) => {
     res.redirect('/admin/novedades');
 });
 
-// Modificación
 router.get('/modificar/:id', async (req, res) => {
     try {
         const novedad = await novedadesModel.getNovedadById(req.params.id);

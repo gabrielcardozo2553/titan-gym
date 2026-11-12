@@ -9,12 +9,10 @@ const contactosModel = require('./models/contactosModel');
 
 const router = express.Router();
 
-// Evita que el contenido del formulario inserte HTML en el mail
 const esc = (t = '') => String(t).replace(/[&<>"']/g, c => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[c]));
 
-// Envía el mensaje por mail solo si hay un SMTP configurado en el .env
 async function enviarMail({ nombre, email, telefono, motivo, plan, mensaje }) {
     if (!process.env.SMTP_HOST) return;
 
@@ -38,10 +36,9 @@ async function enviarMail({ nombre, email, telefono, motivo, plan, mensaje }) {
     });
 }
 
-// POST /api/contacto -> guarda el mensaje (y lo envía por mail si hay SMTP)
 router.post('/contacto', async (req, res) => {
     const { nombre, email, telefono, mensaje } = req.body;
-    // El motivo es opcional; se limita el largo para no guardar textos enormes
+
     const motivo = req.body.motivo ? String(req.body.motivo).slice(0, 60) : null;
 
     if (!nombre || !email || !mensaje) {
@@ -54,14 +51,13 @@ router.post('/contacto', async (req, res) => {
         return res.status(400).json({ error: true, message: 'El email no es válido.' });
     }
 
-    // Largos máximos (coinciden con las columnas de la base de datos)
     if (String(nombre).length > 100 || String(email).length > 150 ||
         (telefono && String(telefono).length > 30) || String(mensaje).length > 2000) {
         return res.status(400).json({ error: true, message: 'Alguno de los datos es demasiado largo.' });
     }
 
     try {
-        // El plan de interés es opcional, pero si viene tiene que existir en la base
+
         let id_plan = null;
         let plan = null;
         if (req.body.id_plan !== undefined && req.body.id_plan !== null && req.body.id_plan !== '') {
@@ -75,7 +71,6 @@ router.post('/contacto', async (req, res) => {
 
         await contactosModel.insertContacto({ nombre, email, telefono, motivo, id_plan, mensaje });
 
-        // El mensaje ya quedó guardado; si falla el mail solo se registra el error
         try {
             await enviarMail({ nombre, email, telefono, motivo, plan: plan ? plan.nombre : null, mensaje });
         } catch (err) {
@@ -89,7 +84,6 @@ router.post('/contacto', async (req, res) => {
     res.status(201).json({ error: false, message: '¡Mensaje enviado! Te respondemos a la brevedad.' });
 });
 
-// GET /api/novedades
 router.get('/novedades', async (req, res) => {
     try {
         let novedades = await novedadesModel.getNovedades();
@@ -113,7 +107,6 @@ router.get('/novedades', async (req, res) => {
     }
 });
 
-// GET /api/planes
 router.get('/planes', async (req, res) => {
     try {
         res.status(200).json(await planesModel.getPlanes());
@@ -123,7 +116,6 @@ router.get('/planes', async (req, res) => {
     }
 });
 
-// GET /api/entrenadores
 router.get('/entrenadores', async (req, res) => {
     try {
         res.status(200).json(await entrenadoresModel.getEntrenadores());

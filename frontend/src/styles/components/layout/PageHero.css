@@ -7,7 +7,6 @@
     border-bottom: 1px solid var(--gris-claro);
 }
 
-/* Greca decorativa en el borde inferior */
 .page-hero::after {
     content: '';
     position: absolute;

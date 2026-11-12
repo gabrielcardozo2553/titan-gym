@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const contactosModel = require('../../models/contactosModel');
 
-// Listado de mensajes recibidos desde el formulario de contacto
 router.get('/', async (req, res) => {
     try {
         const contactos = await contactosModel.getContactos();
@@ -17,7 +16,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Baja (por POST para que un link externo no pueda borrar datos)
 router.post('/eliminar/:id', async (req, res) => {
     try {
         await contactosModel.deleteContactoById(req.params.id);

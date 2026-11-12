@@ -5,7 +5,6 @@ async function getNovedades() {
     return pool.query(query);
 }
 
-// Para el panel admin: incluye el usuario que publicó la novedad (relación novedades -> usuarios)
 async function getNovedadesConAutor() {
     const query = `select n.*, u.usuario as autor
                    from novedades n
@@ -21,7 +20,7 @@ async function getNovedadById(id) {
 }
 
 async function insertNovedad(obj) {
-    // La fecha se completa automáticamente al crear la novedad
+
     obj.fecha = new Date();
     const query = 'insert into novedades set ?';
     return pool.query(query, [obj]);

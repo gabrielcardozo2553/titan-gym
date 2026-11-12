@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../styles/components/layout/PageHero.css';
 
-// Cabecera común de las páginas internas: etiqueta, título, subtítulo y logo de fondo
 const PageHero = ({ etiqueta, titulo, subtitulo }) => {
     return (
         <section className="page-hero">
