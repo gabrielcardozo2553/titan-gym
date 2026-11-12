@@ -1,8 +1,3 @@
--- ============================================================
--- Atletic Gym - Base de datos (MySQL / MariaDB)
--- Recrea el esquema desde cero y carga datos de ejemplo.
--- Uso:  mysql -u root -p < database/atletic_gym.sql
--- ============================================================
 
 SET NAMES utf8mb4;
 
@@ -10,37 +5,28 @@ DROP DATABASE IF EXISTS atletic_gym;
 CREATE DATABASE atletic_gym CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE atletic_gym;
 
--- ------------------------------------------------------------
--- Usuarios del panel de administracion
--- ------------------------------------------------------------
 CREATE TABLE usuarios (
   id        INT UNSIGNED NOT NULL AUTO_INCREMENT,
   usuario   VARCHAR(50)  NOT NULL,
-  password  CHAR(32)     NOT NULL,           -- hash MD5 (igual que en clase)
+  password  CHAR(32)     NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY uq_usuarios_usuario (usuario)
 ) ENGINE=InnoDB;
 
--- ------------------------------------------------------------
--- Novedades del gimnasio (clases nuevas, eventos, consejos)
--- ------------------------------------------------------------
 CREATE TABLE novedades (
   id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
   titulo     VARCHAR(150) NOT NULL,
   subtitulo  TEXT         NOT NULL,
   cuerpo     TEXT         NOT NULL,
-  img_id     VARCHAR(255) NULL,              -- public_id de Cloudinary
+  img_id     VARCHAR(255) NULL,
   categoria  ENUM('clases','eventos','consejos','promociones') NOT NULL DEFAULT 'clases',
   fecha      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  id_usuario INT UNSIGNED NULL,              -- admin que publico la novedad (FK a usuarios)
+  id_usuario INT UNSIGNED NULL,
   PRIMARY KEY (id),
   KEY idx_novedades_fecha (fecha),
   KEY idx_novedades_usuario (id_usuario)
 ) ENGINE=InnoDB;
 
--- ------------------------------------------------------------
--- Planes de membresia (se muestran en el Home)
--- ------------------------------------------------------------
 CREATE TABLE planes (
   id              INT UNSIGNED  NOT NULL AUTO_INCREMENT,
   nombre          VARCHAR(80)   NOT NULL,
@@ -51,29 +37,23 @@ CREATE TABLE planes (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
--- ------------------------------------------------------------
--- Equipo de entrenadores (se muestra en Nosotros)
--- ------------------------------------------------------------
 CREATE TABLE entrenadores (
   id            INT UNSIGNED NOT NULL AUTO_INCREMENT,
   nombre        VARCHAR(100) NOT NULL,
   cargo         VARCHAR(100) NOT NULL,
   especialidad  VARCHAR(100) NOT NULL,
   bio           VARCHAR(500) NOT NULL,
-  foto          VARCHAR(150) NOT NULL,       -- ruta dentro de frontend/public
+  foto          VARCHAR(150) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
--- ------------------------------------------------------------
--- Mensajes recibidos desde el formulario de contacto
--- ------------------------------------------------------------
 CREATE TABLE contactos (
   id        INT UNSIGNED NOT NULL AUTO_INCREMENT,
   nombre    VARCHAR(100) NOT NULL,
   email     VARCHAR(150) NOT NULL,
   telefono  VARCHAR(30)  NULL,
-  motivo    VARCHAR(60)  NULL,               -- motivo de la consulta elegido en el formulario
-  id_plan   INT UNSIGNED NULL,               -- plan por el que consulta (FK a planes)
+  motivo    VARCHAR(60)  NULL,
+  id_plan   INT UNSIGNED NULL,
   mensaje   TEXT         NOT NULL,
   fecha     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -81,12 +61,6 @@ CREATE TABLE contactos (
   KEY idx_contactos_plan (id_plan)
 ) ENGINE=InnoDB;
 
--- ------------------------------------------------------------
--- Relaciones entre tablas (claves foraneas)
---   usuarios 1 --- N novedades   (quien publico cada novedad)
---   planes   1 --- N contactos   (plan por el que consulta cada mensaje)
--- Si se borra el usuario o el plan, el registro queda con NULL.
--- ------------------------------------------------------------
 ALTER TABLE novedades
   ADD CONSTRAINT fk_novedades_usuario FOREIGN KEY (id_usuario)
   REFERENCES usuarios (id) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -95,11 +69,6 @@ ALTER TABLE contactos
   ADD CONSTRAINT fk_contactos_plan FOREIGN KEY (id_plan)
   REFERENCES planes (id) ON DELETE SET NULL ON UPDATE CASCADE;
 
--- ============================================================
--- DATOS DE EJEMPLO
--- ============================================================
-
--- Usuario admin:  admin / admin123  (cambiar en produccion)
 INSERT INTO usuarios (usuario, password) VALUES
   ('admin', MD5('admin123'));
 
